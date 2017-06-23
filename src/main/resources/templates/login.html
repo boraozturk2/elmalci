@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head th:replace="fragments/header :: head">
 
@@ -51,7 +51,7 @@
                             </div>
                             <div class="form-group">
                         	   <label for="password" th:text="#{password}"></label>
-                               <input type="text" th:field="*{password}" class="form-control" />
+                               <input type="password" th:field="*{password}" class="form-control" />
                                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message" ></label>
                             </div>
                             <div class="form-group">
@@ -81,15 +81,18 @@
 
                         <hr>
                         <form autocomplete="off" action="#" th:action="@{/login}" method="post" role="form">
+                         	<div class="form-group">
+                            	<span th:text="${errorMessage}" class="alert alert-danger"></span>
+                            </div>	
                             <div class="form-group">
                         	   <label for="username" th:text="#{username}"></label>
                                <input type="text" class="form-control" id="username" name="username" />
                             </div>
                             <div class="form-group">
                         	   <label for="password" th:text="#{password}"></label>
-                               <input type="text" class="form-control" id="password" name="password" />
+                               <input type="password" class="form-control" id="password" name="password" />
                             </div>
-                            <span th:text="${errorMessage}"></span>
+                           
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i><th:block th:text="#{login}"/></button>
                             </div>

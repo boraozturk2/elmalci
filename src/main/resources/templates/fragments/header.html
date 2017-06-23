@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
 	<title>Idle Elektrik Malzemeleri Pazarı</title>
@@ -52,15 +52,20 @@
             <div class="col-md-6 offer" data-animate="fadeInDown">
                 <a href="#" class="btn btn-success btn-sm" data-animate-hover="shake" ><th:block th:text="#{offerOfTheDay}"/></a>&nbsp;<a href="#"><th:block th:text="#{offerOfTheDayMessage}"/></a>
             </div>
-            <div class="col-md-6" data-animate="fadeInDown" sec:authorize="isAuthenticated()">
+            <!--div sec:authorize="hasRole('USER')"-->
+            <div class="col-md-6" data-animate="fadeInDown"> <!-- sec:authorize="isAuthenticated()" -->
+	            <span sec:authorize="isAuthenticated()">
+                | Logged user: <span sec:authentication="name"></span> |
+                Roles: <span sec:authentication="principal.authorities"></span> |
+                <a th:href="@{/logout}">Sign Out</a>
+            </span>
                 <ul class="menu">
-                    <li><a href="#" data-toggle="modal" data-target="#login-modal"><th:block th:text="#{login}"/></a></li>
-                    <li> <a href="#" th:href="@{/registration}"><th:block th:text="#{register}"/></a></li>
+                		<li><a href="#" data-toggle="modal" data-target="#login-modal"><th:block th:text="#{login}"/></a></li>
+                    	<li> <a href="#" th:href="@{/registration}"><th:block th:text="#{register}"/></a></li>
                     <li><a href="contact.html"><th:block th:text="#{contact}"/></a></li>
                     <li><a href="#"><th:block th:text="#{lastViewed}"/></a></li>
                 </ul>
             </div>
-            
         </div>
         <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
             <div class="modal-dialog modal-sm">
