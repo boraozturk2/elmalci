@@ -52,18 +52,16 @@
             <div class="col-md-6 offer" data-animate="fadeInDown">
                 <a href="#" class="btn btn-success btn-sm" data-animate-hover="shake" ><th:block th:text="#{offerOfTheDay}"/></a>&nbsp;<a href="#"><th:block th:text="#{offerOfTheDayMessage}"/></a>
             </div>
-            <!--div sec:authorize="hasRole('USER')"-->
-            <div class="col-md-6" data-animate="fadeInDown"> <!-- sec:authorize="isAuthenticated()" -->
-	            <span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
-                <a th:href="@{/logout}">Sign Out</a>
-            </span>
-                <ul class="menu">
-                		<li><a href="#" data-toggle="modal" data-target="#login-modal"><th:block th:text="#{login}"/></a></li>
-                    	<li> <a href="#" th:href="@{/registration}"><th:block th:text="#{register}"/></a></li>
+            
+            <div class="col-md-6" data-animate="fadeInDown">
+            	
+            	<ul class="menu">
+                	<li class="list-group-item" sec:authorize="isAuthenticated()" sec:authentication="principal.userAlias"></li>
+            		<li sec:authorize="!isAuthenticated()"><a href="#" data-toggle="modal" data-target="#login-modal"><th:block th:text="#{login}"/></a></li>
+                    <li sec:authorize="!isAuthenticated()"><a href="#" th:href="@{/registration}"><th:block th:text="#{register}"/></a></li>
                     <li><a href="contact.html"><th:block th:text="#{contact}"/></a></li>
                     <li><a href="#"><th:block th:text="#{lastViewed}"/></a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><th:block th:text="#{logout}"/></a></li>
                 </ul>
             </div>
         </div>
@@ -73,25 +71,25 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="Login">Customer login</h4>
+                        <h4 class="modal-title" id="Login" th:text="#{loginNow}">Customer login</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="customer-orders.html" method="post">
+                   		<form autocomplete="off" action="#" th:action="@{/login}" method="post" role="form">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="email-modal" placeholder="email">
+	                            <input type="text" class="form-control" id="username" name="username" th:placeholder="#{email}"/>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="password-modal" placeholder="password">
+                               <input type="password" class="form-control" id="password" name="password" th:placeholder="#{password}"/> 
                             </div>
 
                             <p class="text-center">
-                                <button class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i><th:block th:text="#{login}"/></button>
                             </p>
 
                         </form>
 
-                        <p class="text-center text-muted">Not registered yet?</p>
-                        <p class="text-center text-muted"><a href="register.html"><strong>Register now</strong></a>! It is easy and done in 1&nbsp;minute and gives you access to special discounts and much more!</p>
+                        <p class="text-center text-muted"><th:block th:text="#{reg_1}"/></p>
+                        <p class="text-center text-muted"><a href="#" th:href="@{/registration}"><th:block th:text="#{register}"/></a>! <th:block th:text="#{reg_2}"/></p>
 
                     </div>
                 </div>
