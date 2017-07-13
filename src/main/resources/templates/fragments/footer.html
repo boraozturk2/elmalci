@@ -53,27 +53,26 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 col-sm-6">
-                        <h4>Pages</h4>
-
+                        <h4 th:text="#{pages}"></h4>
                         <ul>
-                            <li><a href="text.html">About us</a>
+                            <li><a th:href="@{/aboutus}" th:text="#{aboutUs}"></a>
                             </li>
-                            <li><a href="text.html">Terms and conditions</a>
+                            <li><a th:href="@{/terms}" th:text="#{terms}"></a>
                             </li>
-                            <li><a href="faq.html">FAQ</a>
+                            <li><a th:href="@{/faq}" th:text="#{faq}"></a>
                             </li>
-                            <li><a href="contact.html">Contact us</a>
+                            <li><a th:href="@{/contactus}" th:text="#{contactUs}"></a>
                             </li>
                         </ul>
 
                         <hr>
 
-                        <h4>User section</h4>
+                        <h4 th:text="#{userSection}">User section</h4>
 
                         <ul>
-                            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                            <li><a data-toggle="modal" data-target="#login-modal" th:text="#{login}">Login</a>
                             </li>
-                            <li><a href="register.html">Regiter</a>
+                            <li><a th:href="@{/registration}" th:text="#{register}">Register</a>
                             </li>
                         </ul>
 
@@ -84,9 +83,9 @@
 
                     <div class="col-md-3 col-sm-6">
 
-                        <h4>Top categories</h4>
+                        <h4 th:text="#{topCategories}">Top categories</h4>
 
-                        <h5>Men</h5>
+                        <h5>Kablo</h5>
 
                         <ul>
                             <li><a href="category.html">T-shirts</a>
@@ -97,7 +96,7 @@
                             </li>
                         </ul>
 
-                        <h5>Ladies</h5>
+                        <h5>Priz</h5>
                         <ul>
                             <li><a href="category.html">T-shirts</a>
                             </li>
@@ -116,18 +115,18 @@
 
                     <div class="col-md-3 col-sm-6">
 
-                        <h4>Where to find us</h4>
+                        <h4 th:text="#{whereToFindUs}">Where to find us</h4>
 
-                        <p><strong>Obaju Ltd.</strong>
-                            <br>13/25 New Avenue
-                            <br>New Heaven
-                            <br>45Y 73J
-                            <br>England
+                        <p><strong><span th:text="#{companyName}"></span></strong>
+                            <br><span th:text="#{companyAd1}"></span>
+                            <br><span th:text="#{companyAd2}"></span>
+                            <br><span th:text="#{companyAd3}"></span>
+                            <br><span th:text="#{companyAd4}"></span>
                             <br>
-                            <strong>Great Britain</strong>
+                            <strong><span th:text="#{companyAd5}"></span></strong>
                         </p>
 
-                        <a href="contact.html">Go to contact page</a>
+                        <a th:href="@{/contactus}" th:text="#{contactUs}"></a>
 
                         <hr class="hidden-md hidden-lg">
 
@@ -138,9 +137,9 @@
 
                     <div class="col-md-3 col-sm-6">
 
-                        <h4>Get the news</h4>
+                        <h4 th:text="#{getTheNews}">Get the news</h4>
 
-                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                        <p class="text-muted"><span th:text="#{getTheNewsText}"></span></p>
 
                         <form>
                             <div class="input-group">
@@ -149,7 +148,7 @@
 
                                 <span class="input-group-btn">
 
-			    <button class="btn btn-default" type="button">Subscribe!</button>
+			    <button class="btn btn-default" type="button" th:text="#{OK}">Subscribe!</button>
 
 			</span>
 
@@ -159,7 +158,7 @@
 
                         <hr>
 
-                        <h4>Stay in touch</h4>
+                        <h4 th:text="#{socialMediaChannels}"></h4>
 
                         <p class="social">
                             <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>

@@ -44,7 +44,9 @@ public class LoginController {
 			modelAndView.setViewName("login");
 
 		} else {
-			modelAndView.setViewName("index");
+			User user = new User();
+			modelAndView.addObject("user", user);
+			modelAndView.setViewName("login");
 		}
 		return modelAndView;
 	}

@@ -56,7 +56,7 @@
                             </div>
                             <div class="form-group">
                         	   <label for="repassword" th:text="#{repassword}"></label>
-                               <input type="text" th:field="*{repassword}" class="form-control" />
+                               <input type="password" th:field="*{repassword}" class="form-control" />
                                <label th:if="${#fields.hasErrors('repassword')}" th:errors="*{repassword}" class="validation-message" ></label>
                             </div>
                             <div class="form-group">
@@ -81,10 +81,10 @@
 
                         <hr>
                         <form autocomplete="off" action="#" th:action="@{/login}" method="post" role="form">
-                         	<div class="form-group">
+							<div class="form-group">
                             	<span th:text="${errorMessage}" class="alert alert-danger"></span>
-                            </div>	
-                            <div class="form-group">
+                            </div>
+                           <div class="form-group">	
                         	   <label for="username" th:text="#{username}"></label>
                                <input type="text" class="form-control" id="username" name="username" />
                             </div>
@@ -92,7 +92,9 @@
                         	   <label for="password" th:text="#{password}"></label>
                                <input type="password" class="form-control" id="password" name="password" />
                             </div>
-                           
+                            <div class="form-group">
+                            	<a th:href="@{/forgotpassword}"><th:block th:text="#{forgotPassword}"/></a>
+                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i><th:block th:text="#{login}"/></button>
                             </div>
