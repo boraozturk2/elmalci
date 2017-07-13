@@ -34,49 +34,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.passwordEncoder(bCryptPasswordEncoder);
 	}
 	
-	
-/*
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		
-		http.
-			authorizeRequests()
-				.antMatchers("/").permitAll()
-				.antMatchers("/login").permitAll()
-				.antMatchers("/registration").permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-				.authenticated().and().csrf().disable().formLogin()
-				.loginPage("/").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/admin/home")
-				.usernameParameter("email")
-				.passwordParameter("password")
-				.and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").and().exceptionHandling()
-				.accessDeniedPage("/access-denied");
-	}
-*/
-	
-	 @Override
-     protected void configure(HttpSecurity http) throws Exception {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
                 .authorizeRequests()
-					.antMatchers("/", "/registration", "/about", "/contact").permitAll()
+					.antMatchers("/", "/registration", "/about", "/contact","/forgotpassword").permitAll()
+					.antMatchers("/changepassword/**").permitAll()
 					.antMatchers("/admin/**").hasAnyRole("ADMIN")
 					.antMatchers("/user/**").hasAnyRole("USER")
 					.anyRequest().authenticated()
                 .and()
-                .formLogin()
+                	.formLogin()
 					.loginPage("/login")
 					.failureUrl("/login?error=true")
 					.permitAll()
-					.and()
-                .logout()
+				.and()
+                	.logout()
                 	.logoutSuccessUrl("/")
 					.permitAll()
-					.and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+				.and()
+					.rememberMe()
+				.and()
+                	.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
     // create two users, admin and user

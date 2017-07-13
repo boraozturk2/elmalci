@@ -3,7 +3,9 @@ package com.bozturk.idle.service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -18,8 +20,10 @@ import org.springframework.stereotype.Service;
 
 import com.bozturk.idle.model.Role;
 import com.bozturk.idle.model.User;
+import com.bozturk.idle.model.UserToken;
 import com.bozturk.idle.repository.RoleRepository;
 import com.bozturk.idle.repository.UserRepository;
+import com.bozturk.idle.repository.UserTokenRepository;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -29,21 +33,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Autowired
 	private RoleRepository roleRepository;
 	@Autowired
+	private UserTokenRepository userTokenRepository;
+	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 
 	@Override
 	public User findUserByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+	
+	@Override
+	public User findUserById(Long id) {
+		return userRepository.findById(id);
 	}
 
 	@Override
 	public void saveUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActive(true);
-/*		
-		Role userRole = roleRepository.findByRole("ADMIN");
-		user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-*/		
 		userRepository.save(user);
 	}
 
@@ -51,7 +59,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByEmail(username);
-		if (user==null) {
+		if (user == null) {
 			throw new UsernameNotFoundException("Kullanıcı Bulunamadı!");
 		}
 		List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
@@ -69,11 +77,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-		return new UserPrincipal(user.getEmail(), user.getPassword(), user.getName()+" "+user.getLastName() , user.isActive(), true, true, true, authorities);
+		return new UserPrincipal(user.getEmail(), user.getPassword(), user.getName() + " " + user.getLastName(),
+				user.isActive(), true, true, true, authorities);
 	}
-	
+
 	@Override
 	public Role findByRole(String roleName) {
 		return roleRepository.findByRole(roleName);
+	}
+
+	@Transactional
+	@Override
+	public UserToken createUserToken(User user) {
+		Optional<UserToken> userToken = userTokenRepository.findByUserId(user.getId());
+		if (userToken.isPresent())
+			userToken.get().updateToken(UUID.randomUUID().toString());
+		else
+			userToken = Optional.of(new UserToken(UUID.randomUUID().toString(), user));
+
+		return userTokenRepository.save(userToken.get());
+	}
+
+	@Transactional
+	@Override
+	public Optional<UserToken> getUserToken(String token) {
+		return userTokenRepository.findByToken(token);
 	}
 }
