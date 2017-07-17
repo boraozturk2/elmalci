@@ -21,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,16 +31,14 @@ import com.bozturk.idle.model.User;
 import com.bozturk.idle.model.UserPrincipal;
 import com.bozturk.idle.model.UserToken;
 import com.bozturk.idle.service.UserService;
-import com.bozturk.idle.utils.SharedUtils;
 
 @Controller
-public class UserPasswordController {
+public class UserPasswordController extends MainController {
 
     // region Constants
 
     public static final String USER_CHANGEPASSWORD_VIEW = "users/password";
     public static final String USER_FORGOTPASSWORD_VIEW = "users/forgot";
-    private static final String FEEDBACK_PASSWORD_EMAIL_SENT = "feedback.user.password.email.sent";
     public static final String FLASH_MESSAGE_KEY_FEEDBACK = "feedbackMessage";
 
     @Autowired
@@ -55,6 +52,7 @@ public class UserPasswordController {
     	ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("forgotEmailDTO", new ForgotEmailDTO());
 		modelAndView.setViewName("forgotpassword");
+		addMissingObjects(modelAndView);
         return modelAndView;
     }
 
@@ -69,6 +67,7 @@ public class UserPasswordController {
           //     fmMailService.sendResetPasswordMail(user.get(), userToken.getToken());
         modelAndView.addObject("forgotEmailDTO", new ForgotEmailDTO());
 		modelAndView.setViewName("forgotpassword");
+		addMissingObjects(modelAndView);
         return modelAndView;
     }
     
@@ -81,6 +80,7 @@ public class UserPasswordController {
         UserPasswordDTO userPasswordDTO = new UserPasswordDTO(user.getId(), token);
         modelAndView.addObject("userPasswordDTO", userPasswordDTO);
 		modelAndView.setViewName("changepassword");
+		addMissingObjects(modelAndView);
         return modelAndView;
     }
 
@@ -96,6 +96,7 @@ public class UserPasswordController {
         	result.rejectValue("","There is already a user registered with the email provided");
             modelAndView.addObject("userPasswordDTO", userPasswordDTO);
      		modelAndView.setViewName("changepassword");
+     		addMissingObjects(modelAndView);
             return modelAndView;
         }
         
@@ -121,7 +122,7 @@ public class UserPasswordController {
             }
         }
          */
-       
+        addMissingObjects(modelAndView);
         return modelAndView;
     }
 

@@ -17,19 +17,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bozturk.idle.model.Role;
 import com.bozturk.idle.model.User;
+import com.bozturk.idle.service.CategoryService;
 import com.bozturk.idle.service.UserService;
 
 @Controller
-public class LoginController {
+public class LoginController extends MainController {
 	
 	@Autowired
 	private UserService userService;
-
+	
 	@RequestMapping(value={"/"}, method = RequestMethod.GET)
 	public ModelAndView index(){
-
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("index");
+		addMissingObjects(modelAndView);
 		return modelAndView;
 	}
 	
@@ -48,6 +49,8 @@ public class LoginController {
 			modelAndView.addObject("user", user);
 			modelAndView.setViewName("login");
 		}
+		
+		addMissingObjects(modelAndView);
 		return modelAndView;
 	}
 	
@@ -57,6 +60,7 @@ public class LoginController {
 		User user = new User();
 		modelAndView.addObject("user", user);
 		modelAndView.setViewName("registration");
+		addMissingObjects(modelAndView);
 		return modelAndView;
 	}
 	
@@ -87,6 +91,7 @@ public class LoginController {
 			modelAndView.setViewName("index");
 						
 		}
+		addMissingObjects(modelAndView);
 		return modelAndView;
 	}
 	
@@ -98,6 +103,7 @@ public class LoginController {
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("admin/home");
+		addMissingObjects(modelAndView);
 		return modelAndView;
 	}
 	

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+   <div th:replace="fragments/header :: myheader"></div>
+
+   <div id="all">
+      <div id="content">
+         <div class="container">
+            <div class="col-md-3">
+               <div th:replace="user/leftnav :: userleftnav"></div>
+            </div>
+            
+            <div class="col-md-9">
+                    <div class="box">
+                        <h1 th:text="#{user.store.header}">My Store</h1>
+                        <p class="lead" th:text="#{user.store.header.lead}"></p>
+                        <p class="text-muted" th:text="#{user.store.header.text}"></p>
+
+                        <hr/>
+                        <form name="f" th:action="@{/user/store}" th:object="${store}" method="post" class="form-horizontal">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <!--  label for="password_old">Old password</label-->
+                                        <select th:field="*{country}">
+                                            <option th:each="country : ${countries}" 
+                                                    th:value="${country.countryName}" 
+                                                    th:text="${country.countryName}">Wireframe</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                           <div class="row">
+                               <div class="col-sm-12 text-center">
+                                   <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save new password</button>
+                              </div>
+                          </div> 
+                        </form>
+                  </div>
+              </div>          
+         </div>
+      </div>
+   </div>
+
+   <div th:replace="fragments/footer :: myfooter"></div>
+
+</body>
+
+</html>

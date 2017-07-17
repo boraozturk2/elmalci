@@ -1,0 +1,5 @@
+DB
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password: ************
+mysql> create database idle CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+Query OK, 1 row affected (0.00 sec)
