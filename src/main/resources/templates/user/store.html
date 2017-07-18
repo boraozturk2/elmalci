@@ -2,7 +2,128 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"
    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head th:replace="fragments/header :: head"></head>
+<head>
+	<title>Elmalci Elektrik Malzemeleri Pazarı</title>
+	
+	<!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" -->
+  	<!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script -->
+  	<!--  script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script  -->
+    <script src="/js/jquery-1.11.0.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.cookie.js"></script>
+    <script src="/js/waypoints.min.js"></script>
+    <script src="/js/modernizr.js"></script>
+    <script src="/js/bootstrap-hover-dropdown.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/front.js"></script>
+  	<script src="/js/respond.min.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Elmalci Elektrik Malzemeleri Pazarı">
+    <meta name="author" content="Bora Ozturk">
+    <meta name="keywords" content="Elektrik Malzemeleri">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
+
+    <!-- styles -->
+    <link href="/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.css" rel="stylesheet">
+    <link href="/css/owl.theme.css" rel="stylesheet">
+	<link href="/css/registration.css" rel="stylesheet">
+
+    <!-- theme stylesheet -->
+    <link href="/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+
+    <!-- your stylesheet with modifications -->
+    <link href="/css/custom.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/kablo.png">
+   
+
+   <script type="text/javascript">
+      $(document).ready(function() { 
+         $('#country').change(
+            function() {
+               $.getJSON('/user/cities', {
+              	countryId : $(this).val(),
+                  ajax : 'true'
+               }, function(data) {
+            	  var html = '<option value="">Şehir Seçiniz</option>';
+                  var len = data.length;
+                  for ( var i = 0; i < len; i++) {
+                     html += '<option value="' + data[i].cityId + '">'
+                           + data[i].cityName + '</option>';
+                  }
+                  html += '</option>';
+       
+                  $('#city').html(html);
+               });
+            });
+      });
+      $(document).ready(function() { 
+          $('#city').change(
+             function() {
+                $.getJSON('/user/counties', {
+               	cityId : $(this).val(),
+                   ajax : 'true'
+                }, function(data) {
+                	var html = '<option value="">İlçe Seçiniz</option>';
+                   var len = data.length;
+                   for ( var i = 0; i < len; i++) {
+                      html += '<option value="' + data[i].countyId + '">'
+                            + data[i].countyName + '</option>';
+                   }
+                   html += '</option>';
+        
+                   $('#county').html(html);
+                });
+             });
+       });
+       $(document).ready(function() { 
+          $('#county').change(
+             function() {
+                $.getJSON('/user/areas', {
+               	countyId : $(this).val(),
+                   ajax : 'true'
+                }, function(data) {
+                	var html = '<option value="">Semt Seçiniz</option>';
+                   var len = data.length;
+                   for ( var i = 0; i < len; i++) {
+                      html += '<option value="' + data[i].areaId + '">'
+                            + data[i].areaName + '</option>';
+                   }
+                   html += '</option>';
+        
+                   $('#area').html(html);
+                });
+             });
+       });
+       $(document).ready(function() { 
+           $('#area').change(
+              function() {
+                 $.getJSON('/user/neighborhoods', {
+                	areaId : $(this).val(),
+                    ajax : 'true'
+                 }, function(data) {
+                	 var html = '<option value="">Mahalle/Köy Seçiniz</option>';
+                    var len = data.length;
+                    for ( var i = 0; i < len; i++) {
+                       html += '<option value="' + data[i].neighborhoodId + '">'
+                             + data[i].neighborhoodName + '</option>';
+                    }
+                    html += '</option>';
+         
+                    $('#neighborhood').html(html);
+                 });
+              });
+        });
+   </script>
+</head>
 
 <body>
 
@@ -23,25 +144,91 @@
 
                         <hr/>
                         <form name="f" th:action="@{/user/store}" th:object="${store}" method="post" class="form-horizontal">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <!--  label for="password_old">Old password</label-->
-                                        <select th:field="*{country}">
-                                            <option th:each="country : ${countries}" 
-                                                    th:value="${country.countryName}" 
-                                                    th:text="${country.countryName}">Wireframe</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.row -->
-                           <div class="row">
-                               <div class="col-sm-12 text-center">
-                                   <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save new password</button>
-                              </div>
-                          </div> 
-                        </form>
+                        
+                        <input type="hidden" id="storeId" name="storeId" th:value="${storeId}">
+                        <div class="col-md-9">
+                           <div class="products-sort-by">
+                               <label for="lastName"><strong><th:block th:text="#{user.store.table.name}"></th:block></strong></label>
+                               <input type="text" class="form-control" />
+                           </div>
+                        </div>
+                        
+                        <div class="col-md-9">
+                           <div class="products-sort-by">
+                              <strong>Ülke</strong>
+                               <select th:field="*{country}" class="form-control">
+                                 <option th:each="country : ${countries}" th:value="${country.countryId}" th:text="${country.countryName}">Wireframe</option>
+                              </select>
+                           </div>
+                        </div>
+                        
+                        <div class="col-md-9">
+                           <div class="products-sort-by">
+                              <strong>Şehir</strong> 
+                              <select  id="city" name="city" class="form-control">
+                                 <option value="Ülke Seçiniz">Önce Ülke Seçiniz</option>
+                              </select>
+                           </div>
+                        </div>
+                        
+                        <div class="col-md-9">
+                           <div class="products-sort-by">
+                              <strong>İlçe</strong> 
+                              <select  id="county" name="county" class="form-control">
+                                 <option value="Ülke Seçiniz">Önce Şehir Seçiniz</option>
+                              </select>
+                           </div>
+                        </div>
+                        
+                        <div class="col-md-9">
+                           <div class="products-sort-by">
+                              <strong>Semt</strong> 
+                              <select  id="area" name="area" class="form-control">
+                                 <option value="Ülke Seçiniz">Önce İlçe Seçiniz</option>
+                              </select>
+                           </div>
+                        </div>
+                        
+                        <div class="col-md-9">
+                           <div class="products-sort-by">
+                              <strong>Mah./Köy</strong> 
+                              <select id="neighborhood" name="neighborhood" class="form-control">
+                                 <option value="Ülke Seçiniz">Önce Semt Seçiniz</option>
+                              </select>
+                           </div>
+                        </div>
+                 
+                       <div class="col-md-9">
+                               <label for="cadde"><strong><th:block th:text="#{user.store.table.cadde}"></th:block></strong></label>
+                               <input type="text" class="form-control" />
+                        </div>
+                        
+                        <div class="col-md-9">
+                               <label for="sokak"><strong><th:block th:text="#{user.store.table.sokak}"></th:block></strong></label>
+                               <input type="text" class="form-control" />
+                        </div>
+                        
+                        <div class="col-md-9">
+                               <label for="sokak"><strong><th:block th:text="#{user.store.table.kapino}"></th:block></strong></label>
+                               <input type="text" class="form-control" />
+                        </div>
+                        
+                        <div class="col-md-9">
+                               <label for="sokak"><strong><th:block th:text="#{user.store.table.daire}"></th:block></strong></label>
+                               <input type="text" class="form-control" />
+                               <label class="validation-message" ></label>
+                        </div>
+                        
+                        <div class="form-group">
+                             <div class="col-md-9 text-center">
+                                  
+                                  <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>OK</button>
+                                  
+                             </div>
+                        </div> 
+
+                   </form>       
+
                   </div>
               </div>          
          </div>

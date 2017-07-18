@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.bozturk.idle.model.address.Country;
 
-public class AddressDto {
+public class StoreDto {
 
 	private List<Country> countries;
 
-	public AddressDto() {
+	public StoreDto() {
 		// TODO Auto-generated constructor stub
 	}
 
