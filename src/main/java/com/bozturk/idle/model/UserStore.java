@@ -34,35 +34,54 @@ public class UserStore {
 	@Column(name = "country", length=100)
 	private String country;
 	
+	@Column(name = "country_id", length=63)
+	private Long countryId;
+	
 	@NotEmpty(message = "*İl boş olamaz")
 	@Column(name = "city", length=100)
 	private String city;
+	
+	@Column(name = "city_id", length=36)
+	private Long cityId;
 	
 	@NotEmpty(message = "*İlçe boş olamaz")
 	@Column(name = "county", length=100)
 	private String county;
 	
+	@Column(name = "county_id", length=36)
+	private Long countyId;
+	
 	@NotEmpty(message = "*Mahhale/Köy boş olamaz")
 	@Column(name = "area", length=100)
 	private String area;
 	
+	@Column(name = "area_id", length=36)
+	private Long areaId;
+	
 	@Column(name = "neighborhood", length=100)
 	private String neighborhood;
+	
+	@Column(name = "neighborhood_id", length=36)
+	private Long neighborhoodId;
 	
 	@Column(name = "zipCode", length=100)
 	private String zipCode;
 	
-	@Column(name="neighborhood_id")
-	private String neighborhoodId;	
-	
-	@Column(name = "kapi_no", length=100)
-	private String kapiNo;
+	@Column(name = "cadde", length=100)
+	private String cadde;
 	
 	@Column(name = "sokak", length=100)
 	private String sokak;
 	
-	@Column(name = "cadde", length=100)
-	private String cadde;
+	@Column(name = "kapi", length=100)
+	private String kapi;
+	
+	@Column(name = "apartman", length=100)
+	private String apartman;
+	
+	@Column(name = "daire", length=20)
+	private String daire;
+	
 	
 	public UserStore() {
 		// TODO Auto-generated constructor stub
@@ -140,20 +159,52 @@ public class UserStore {
 		this.zipCode = zipCode;
 	}
 
-	public String getNeighborhoodId() {
+	public Long getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(Long countryId) {
+		this.countryId = countryId;
+	}
+
+	public Long getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
+	}
+
+	public Long getCountyId() {
+		return countyId;
+	}
+
+	public void setCountyId(Long countyId) {
+		this.countyId = countyId;
+	}
+
+	public Long getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(Long areaId) {
+		this.areaId = areaId;
+	}
+
+	public Long getNeighborhoodId() {
 		return neighborhoodId;
 	}
 
-	public void setNeighborhoodId(String neighborhoodId) {
+	public void setNeighborhoodId(Long neighborhoodId) {
 		this.neighborhoodId = neighborhoodId;
 	}
 
-	public String getKapiNo() {
-		return kapiNo;
+	public String getCadde() {
+		return cadde;
 	}
 
-	public void setKapiNo(String kapiNo) {
-		this.kapiNo = kapiNo;
+	public void setCadde(String cadde) {
+		this.cadde = cadde;
 	}
 
 	public String getSokak() {
@@ -164,15 +215,28 @@ public class UserStore {
 		this.sokak = sokak;
 	}
 
-	public String getCadde() {
-		return cadde;
+	public String getKapi() {
+		return kapi;
 	}
 
-	public void setCadde(String cadde) {
-		this.cadde = cadde;
+	public void setKapi(String kapi) {
+		this.kapi = kapi;
 	}
-	
-	
 
+	public String getApartman() {
+		return apartman;
+	}
+
+	public void setApartman(String apartman) {
+		this.apartman = apartman;
+	}
+
+	public String getDaire() {
+		return daire;
+	}
+
+	public void setDaire(String daire) {
+		this.daire = daire;
+	}
 	
 }

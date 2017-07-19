@@ -26,6 +26,10 @@ public class Neighborhood {
 	@NotEmpty(message = "*NeighborhoodName Kod Boş olamaz")
 	private String neighborhoodName;
 
+	@Column(name = "zip_code")
+	@NotEmpty(message = "*PostKodu Boş olamaz")
+	private String zipCode;
+
 	public Neighborhood() {
 	}
 
@@ -51,6 +55,14 @@ public class Neighborhood {
 
 	public void setNeighborhoodName(String neighborhoodName) {
 		this.neighborhoodName = neighborhoodName;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 
 	@Override

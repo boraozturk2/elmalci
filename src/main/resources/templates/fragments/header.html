@@ -59,7 +59,7 @@
                 	<li class="list-group-item" sec:authorize="isAuthenticated()" sec:authentication="principal.userAlias"></li>
             		<li sec:authorize="!isAuthenticated()"><a href="#" data-toggle="modal" data-target="#login-modal"><th:block th:text="#{login}"/></a></li>
                     <li sec:authorize="!isAuthenticated()"><a href="#" th:href="@{/registration}"><th:block th:text="#{register}"/></a></li>
-                    <li><a th:href="@{/user/main}"><th:block th:text="#{lastViewed}"/></a></li>
+                    <li><a th:href="@{/user/stores}"><th:block th:text="#{lastViewed}"/></a></li>
                     <li><a href="contact.html"><th:block th:text="#{contact}"/></a></li>
                     <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/logout}"><th:block th:text="#{logout}"/></a></li>
                 </ul>
