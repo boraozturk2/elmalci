@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+   <div th:replace="fragments/header :: myheader"></div>
+
+   <div id="all">
+      <div id="content">
+         <div class="container">
+            <div class="col-md-3">
+               <div th:replace="user/leftnav :: userleftnav"></div>
+            </div>
+            
+            <div class="col-md-9">
+                    <div class="box">
+                        <h1 th:text="#{user.bankaccount.header}">My Store</h1>
+                        <p class="lead" th:text="#{user.bankaccount.header.lead}"></p>
+                        <p class="text-muted" th:text="#{user.bankaccount.header.text}"></p>
+
+                        <hr/>
+                        <form name="f" th:action="@{/user/bankaccount}" th:object="${bankAccount}" method="post" class="form-horizontal">
+                        
+                        <input type="hidden" id="accountId" name="accountId" th:field="*{accountId}">
+                        
+                        <div class="col-md-9" th:if="${not #strings.isEmpty(errorMessage)}">
+                           <div class="products-sort-by">
+                              <label  th:text="${errorMessage}" class="alert alert-danger"></label>
+                           </div>
+                        </div>
+                        
+                        <div class="col-md-9">
+                           <div class="products-sort-by">
+                               <label for="*{accountName}" class="label label-danger"><strong><th:block th:text="#{user.bankaccount.table.accname}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="accountName" name="accountName" th:field="*{accountName}" required/>
+                           </div>
+                        </div>
+                       
+                        <div class="col-md-9">
+                               <label for="iban" class="label label-primary"><strong><th:block th:text="#{user.bankaccount.table.iban}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="iban" name="iban" th:field="*{iban}"/>
+                        </div>
+                        
+                        <div class="col-md-9">
+                               <label for="bank" class="label label-primary"><strong><th:block th:text="#{user.bankaccount.table.bank}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="bank" name="bank" th:field="*{bank}"/>
+                        </div>
+                        
+                        <div class="col-md-9">
+                               <label for="branch" class="label label-primary"><strong><th:block th:text="#{user.bankaccount.table.branch}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="branch" name="branch" th:field="*{branch}"/>
+                        </div>
+                        
+                        <div class="col-md-9">
+                               <label for="accountNo" class="label label-primary"><strong><th:block th:text="#{user.bankaccount.table.accno}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="accountNo" name="accountNo" th:field="*{accountNo}"/>
+                        </div>
+                        
+                        <div class="col-md-9">
+                               <label for="name" class="label label-danger"><strong><th:block th:text="#{user.bankaccount.table.name}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="name" name="name" th:field="*{name}" required/>
+                        </div>
+                        
+                        <div class="col-md-9">
+                               <label for="lastName" class="label label-danger"><strong><th:block th:text="#{user.bankaccount.table.lastname}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="lastName" name="lastName" th:field="*{lastName}" required/>
+                        </div>
+                        <div class="form-group">
+                             <div class="col-md-9 text-center">
+                                 <br/>
+                                  <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>OK</button>
+                                  
+                             </div>
+                        </div> 
+
+                   </form>       
+
+                  </div>
+              </div>          
+         </div>
+      </div>
+   </div>
+
+   <div th:replace="fragments/footer :: myfooter"></div>
+
+</body>
+
+</html>

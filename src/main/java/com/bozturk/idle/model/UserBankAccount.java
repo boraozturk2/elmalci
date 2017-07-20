@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -19,7 +21,7 @@ public class UserBankAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "account_id")
-	private long accountId;
+	private Long accountId;
 
 	@Column(name = "store_name", length = 100)
 	@NotEmpty(message = "*İsim boş olamaz")
@@ -37,7 +39,8 @@ public class UserBankAccount {
 	@Column(name = "last_name", length = 50)
 	private String lastName;
 
-	@Column(name = "iban", length = 20)
+	@Size(max=30,message="20 karakter olmalıdır")
+	@Column(name = "iban", length = 30)
 	private String iban;
 
 	@Column(name = "bank", length = 50)
@@ -53,11 +56,11 @@ public class UserBankAccount {
 		// TODO Auto-generated constructor stub
 	}
 
-	public long getAccountId() {
+	public Long getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(long accountId) {
+	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
 	}
 
