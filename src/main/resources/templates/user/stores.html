@@ -22,7 +22,7 @@
                         <p class="text-muted" th:text="#{user.store.header.text}"></p>
 
                        <hr/>
-                       <a th:href="@{/user/store}" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i>Add New Store</a>
+                       <a th:href="@{/user/store}" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i><th:block th:text="#{user.store.table.action.new}"></th:block></a>
                        <div class="table-responsive">
                          <table class="table table-hover">
                              <thead>
@@ -52,7 +52,7 @@
                                      <!-- td th:text="${userStore.sokak}"></td-->
                                      <!-- td th:text="${userStore.kapi}"></td-->
                                      <!-- td th:text="${userStore.daire}"></td-->
-                                     <td><a th:href="@{/user/store(userStoreId=${userStore.storeId})}" class="btn btn-primary btn-sm">View</a></td>
+                                     <td><a th:href="@{/user/store(userStoreId=${userStore.storeId})}" class="btn btn-primary btn-sm"><i class="fa fa-book" aria-hidden="true"></i></a></td>
                                  </tr>
                              </tbody>
                          </table>

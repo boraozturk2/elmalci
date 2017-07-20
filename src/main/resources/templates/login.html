@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-group">
                         	   <label for="phone" th:text="#{phone}"></label>
-                               <input type="text" th:field="*{phone}" class="form-control" placeholder="90-XXX-XX-XX" />
+                               <input type="tel" th:field="*{phone}" class="form-control" placeholder="90-XXX-XX-XX" />
                                <label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="validation-message" ></label>
                             </div>
                             <div class="text-center">

@@ -38,7 +38,7 @@
 	<link href="/css/registration.css" rel="stylesheet">
 
     <!-- theme stylesheet -->
-    <link href="/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+    <link href="/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
 
     <!-- your stylesheet with modifications -->
     <link href="/css/custom.css" rel="stylesheet">
@@ -146,17 +146,24 @@
                         <form name="f" th:action="@{/user/store}" th:object="${store}" method="post" class="form-horizontal">
                         
                         <input type="hidden" id="storeId" name="storeId" th:field="*{storeId}">
-                        <div class="col-md-9">
+                        
+                        <div class="col-md-9" th:if="${not #strings.isEmpty(errorMessage)}">
                            <div class="products-sort-by">
-                               <label for="lastName"><strong><th:block th:text="#{user.store.table.name}"></th:block></strong></label>
-                               <input type="text" class="form-control" id="storeName" name="storeName" th:field="*{storeName}"/>
+                              <label  th:text="${errorMessage}" class="alert alert-danger"></label>
                            </div>
                         </div>
                         
                         <div class="col-md-9">
                            <div class="products-sort-by">
-                              <strong>Ülke</strong>
-                               <select th:field="*{countryId}" class="form-control">
+                               <label for="lastName" class="label label-danger"><strong><th:block th:text="#{user.store.table.name}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="storeName" name="storeName" th:field="*{storeName}" required/>
+                           </div>
+                        </div>
+                        
+                        <div class="col-md-9">
+                           <div class="products-sort-by">
+                              <strong class="label label-danger">Ülke</strong>
+                               <select th:field="*{countryId}" class="form-control" required>
                                  <option th:each="country : ${countries}" th:value="${country.countryId}" th:text="${country.countryName}" th:selected="*{countryId}">Wireframe</option>
                               </select>
                            </div>
@@ -164,19 +171,20 @@
                         
                         <div class="col-md-9">
                            <div class="products-sort-by">
-                              <strong>Şehir</strong> 
-                              <select  id="cityId" name="cityId" class="form-control">
-                                 <option value="Ülke Seçiniz">Önce Ülke Seçiniz</option>
+                              <strong class="label label-danger">Şehir</strong> 
+                              <select  id="cityId" name="cityId" class="form-control" required>
+                                 <option value="Şehir Seçiniz">Önce Ülke Seçiniz</option>
                                  <option th:each="city : ${cities}" th:value="${city.cityId}" th:text="${city.cityName}" th:field="*{cityId}">Wireframe</option>
                               </select>
                            </div>
+                           <label th:if="${#fields.hasErrors('cityId')}" th:errors="*{cityId}" class="validation-message" ></label>
                         </div>
                         
                         <div class="col-md-9">
                            <div class="products-sort-by">
-                              <strong>İlçe</strong> 
+                              <strong class="label label-danger">İlçe</strong> 
                               <select  id="countyId" name="countyId" class="form-control">
-                                 <option value="Ülke Seçiniz">Önce Şehir Seçiniz</option>
+                                 <option value="İlşçe Seçiniz">Önce Şehir Seçiniz</option>
                                  <option th:each="county : ${counties}" th:value="${county.countyId}" th:text="${county.countyName}" th:field="*{countyId}">Wireframe</option>
                               </select>
                            </div>
@@ -184,9 +192,9 @@
                         
                         <div class="col-md-9">
                            <div class="products-sort-by">
-                              <strong>Semt</strong> 
+                              <strong class="label label-danger">Semt</strong> 
                               <select  id="areaId" name="areaId" class="form-control">
-                                 <option value="Ülke Seçiniz">Önce İlçe Seçiniz</option>
+                                 <option value="Semt Seçiniz">Önce İlçe Seçiniz</option>
                                  <option th:each="area : ${areas}" th:value="${area.areaId}" th:text="${area.areaName}" th:field="*{areaId}">Wireframe</option>
                               </select>
                            </div>
@@ -194,38 +202,38 @@
                         
                         <div class="col-md-9">
                            <div class="products-sort-by">
-                              <strong>Mah./Köy</strong> 
+                              <strong class="label label-danger">Mah./Köy</strong> 
                               <select id="neighborhoodId" name="neighborhoodId" class="form-control">
-                                 <option value="Ülke Seçiniz">Önce Semt Seçiniz</option>
-                                 <option th:each="neighborhood : ${neighborhoods}" th:value="${neighborhood.neighborhoodId}" th:text="${neighborhood.neighborhoodName}" th:field="*{neighborhoodId}">Wireframe</option>
+                                 <option value="Mahalle Seçiniz">Önce Semt Seçiniz</option>
+                                 <option th:each="neighborhood : ${neighborhoods}" th:value="${neighborhood.neighborhoodId}" th:text="${neighborhood.neighborhoodName}" th:field="*{neighborhoodId}"></option>
                               </select>
                            </div>
                         </div>
                  
                        <div class="col-md-9">
-                               <label for="cadde"><strong><th:block th:text="#{user.store.table.cadde}"></th:block></strong></label>
-                               <input type="text" class="form-control" id="cadde" name="cadde"/>
+                               <label for="cadde" class="label label-primary"><strong><th:block th:text="#{user.store.table.cadde}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="cadde" name="cadde" th:field="*{cadde}"/>
                         </div>
                         
                         <div class="col-md-9">
-                               <label for="sokak"><strong><th:block th:text="#{user.store.table.sokak}"></th:block></strong></label>
-                               <input type="text" class="form-control" id="sokak" name="sokak"/>
+                               <label for="sokak" class="label label-primary"><strong><th:block th:text="#{user.store.table.sokak}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="sokak" name="sokak" th:field="*{sokak}"/>
                         </div>
                         
                         <div class="col-md-9">
-                               <label for="kapi"><strong><th:block th:text="#{user.store.table.kapi}"></th:block></strong></label>
-                               <input type="text" class="form-control" id="kapi" name="kapi"/>
+                               <label for="kapi" class="label label-primary"><strong><th:block th:text="#{user.store.table.kapi}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="kapi" name="kapi" th:field="*{kapi}"/>
                         </div>
                         
                         <div class="col-md-9">
-                               <label for="apartman"><strong><th:block th:text="#{user.store.table.apartman}"></th:block></strong></label>
-                               <input type="text" class="form-control" id="apartman" name="apartman"/>
+                               <label for="apartman" class="label label-primary"><strong><th:block th:text="#{user.store.table.apartman}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="apartman" name="apartman" th:field="*{apartman}"/>
                         </div>
                         
                         <div class="col-md-9">
-                               <label for="daire"><strong><th:block th:text="#{user.store.table.daire}"></th:block></strong></label>
-                               <input type="text" class="form-control" id="daire" name="daire"/>
-                               <label class="validation-message" ></label>
+                               <label for="daire" class="label label-primary"><strong><th:block th:text="#{user.store.table.daire}"></th:block></strong></label>
+                               <input type="text" class="form-control" id="daire" name="daire" th:field="*{daire}"/>
+                               <br/>
                         </div>
                         
                         <div class="form-group">

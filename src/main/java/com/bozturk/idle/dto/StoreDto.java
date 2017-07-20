@@ -1,9 +1,12 @@
 package com.bozturk.idle.dto;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class StoreDto {
 
 	private Long storeId;
 
+	@NotEmpty(message="Mağaza Adı Giriniz")
 	private String storeName;
 	private Long countryId;
 	private Long cityId;

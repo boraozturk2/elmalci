@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,7 +53,7 @@ public class StoreController extends MainController {
 	private UserRepository userRepository;
 	
 	@RequestMapping(value = "/user/store", method = RequestMethod.GET)
-	public ModelAndView getStoreEmpty(@RequestParam(required=false) Long userStoreId) {
+	public ModelAndView getStore(@RequestParam(required=false) Long userStoreId) {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("countries",countryRepository.findAll());
@@ -67,7 +68,11 @@ public class StoreController extends MainController {
 			myStore.setCountyId(userStore.getCountyId());
 			myStore.setAreaId(userStore.getAreaId());
 			myStore.setNeighborhoodId(userStore.getNeighborhoodId());
-			
+			myStore.setCadde(userStore.getCadde());
+			myStore.setSokak(userStore.getSokak());
+			myStore.setKapi(userStore.getKapi());
+			myStore.setApartman(userStore.getApartman());
+			myStore.setDaire(userStore.getDaire());
 			
 			modelAndView.addObject("cities",cityRepository.findByCountryId(userStore.getCountryId()));
 			modelAndView.addObject("counties",countyRepository.findByCityId(userStore.getCityId()));
@@ -97,12 +102,34 @@ public class StoreController extends MainController {
 	}
 	
 	@RequestMapping(value = "/user/store", method = RequestMethod.POST)
-	public String upsertCategories(@Valid StoreDto store, BindingResult result) {
+	public ModelAndView upsertCategories(@Valid StoreDto store, BindingResult result, ModelAndView modelAndView) {
 
+		if (result.hasErrors()) {
+			modelAndView.getModelMap().addAttribute("errorMessage", "Lütfen Zorunlu Alanları Seçiniz");
+			modelAndView.addObject("store", store);
+			modelAndView.addObject("countries",countryRepository.findAll());
+			if (store.getCountryId()!=null)
+				modelAndView.addObject("cities",cityRepository.findByCountryId(store.getCountryId()));
+			if (store.getCityId()!=null)
+				modelAndView.addObject("counties",countyRepository.findByCityId(store.getCityId()));
+			if (store.getCountyId()!=null)
+				modelAndView.addObject("areas",areaRepository.findByCountyId(store.getCountyId()));
+			if (store.getAreaId()!=null)
+				modelAndView.addObject("neighborhoods",neighborhoodRepository.findByAreaId(store.getAreaId()));
+			modelAndView.setViewName("/user/store");
+			addMissingObjects(modelAndView);
+			return modelAndView;
+		}
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserPrincipal user = (UserPrincipal)authentication.getPrincipal();
 		
-		UserStore userStore = new UserStore();
+		UserStore userStore = null;
+		if (store.getStoreId()!=null && store.getStoreId()!=0){
+			userStore = userStoreRepository.findOne(store.getStoreId());
+		} else {
+			userStore = new UserStore();
+		}
+		
 		userStore.setUser(userRepository.findByEmail(user.getUsername()));
 		userStore.setStoreName(store.getStoreName());
 		userStore.setCountryId(store.getCountryId());
@@ -134,7 +161,8 @@ public class StoreController extends MainController {
 		modelAndView.setViewName("/user/stores");
 		addMissingObjects(modelAndView);
 		*/
-		return "redirect:/user/stores";
+		//return "redirect:/user/stores";
+		return getUserStores();
 	}
 
 	
