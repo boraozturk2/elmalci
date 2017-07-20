@@ -5,10 +5,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +52,7 @@ public class StoreController extends MainController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/user/store", method = RequestMethod.GET)
 	public ModelAndView getStore(@RequestParam(required=false) Long userStoreId) {
 
@@ -85,6 +86,7 @@ public class StoreController extends MainController {
 		return modelAndView;
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/user/stores", method = RequestMethod.GET)
 	public ModelAndView getUserStores() {
 
@@ -101,6 +103,7 @@ public class StoreController extends MainController {
 		return modelAndView;
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/user/store", method = RequestMethod.POST)
 	public ModelAndView upsertCategories(@Valid StoreDto store, BindingResult result, ModelAndView modelAndView) {
 

@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bozturk.idle.model.Role;
 import com.bozturk.idle.model.User;
-import com.bozturk.idle.service.CategoryService;
 import com.bozturk.idle.service.UserService;
 
 @Controller
