@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+   <div th:replace="fragments/header :: myheader"></div>
+
+   <div id="all">
+      <div id="content">
+         <div class="container">
+            <div class="col-md-3">
+               <div th:replace="user/leftnav :: userleftnav"></div>
+            </div>
+            
+            <div class="col-md-9">
+                    <div class="box">
+                    
+                        <h1><i class="fa fa-home fa-2x" aria-hidden="true"></i><th:block th:text="#{user.store.header}"></th:block></h1>
+                        <p class="lead" th:text="#{user.store.header.lead}"></p>
+                        <p class="text-muted" th:text="#{user.store.header.text}"></p>
+
+                       <hr/>
+                       <a th:href="@{/user/store}" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i><th:block th:text="#{user.store.table.action.new}"></th:block></a>
+                       <div class="table-responsive">
+                         <table class="table table-hover">
+                             <thead>
+                                 <tr>
+                                     <th th:text="#{user.store.table.name}">Mağaza Adı</th>
+                                     <!-- th th:text="#{user.store.table.ulke}">Ülke</th-->
+                                     <th th:text="#{user.store.table.il}">İl</th>
+                                     <th th:text="#{user.store.table.ilce}">İlçe</th>
+                                     <th th:text="#{user.store.table.semt}">Semt</th>
+                                     <th th:text="#{user.store.table.mahalle}">Mahalle</th>
+                                     <th th:text="#{user.store.table.cadde}">Cadde</th>
+                                     <!-- th th:text="#{user.store.table.sokak}">Sokak</th-->
+                                     <!-- th th:text="#{user.store.table.kapi}">Kapı</th-->
+                                     <!-- th th:text="#{user.store.table.daire}">Daire</th-->
+                                     <th th:text="#{user.store.table.action}">İşlem</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr th:each="userStore : ${userStores}">
+                                     <td th:text="${userStore.storeName}"></td>
+                                     <!-- td th:text="${userStore.country}"></td-->
+                                     <td th:text="${userStore.city}"></td>
+                                     <td th:text="${userStore.county}"></td>
+                                     <td th:text="${userStore.area}"></td>
+                                     <td th:text="${userStore.neighborhood}"></td>
+                                     <td th:text="${userStore.cadde}"></td>
+                                     <!-- td th:text="${userStore.sokak}"></td-->
+                                     <!-- td th:text="${userStore.kapi}"></td-->
+                                     <!-- td th:text="${userStore.daire}"></td-->
+                                     <td><a th:href="@{/user/store(userStoreId=${userStore.storeId})}" class="btn btn-primary btn-sm"><i class="fa fa-book" aria-hidden="true"></i></a></td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                  </div>
+              </div>          
+         </div>
+      </div>
+   </div>
+
+   <div th:replace="fragments/footer :: myfooter"></div>
+
+</body>
+
+</html>

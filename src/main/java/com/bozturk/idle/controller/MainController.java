@@ -8,7 +8,7 @@ import com.bozturk.idle.service.CategoryService;
 public class MainController {
 
 	@Autowired
-	private CategoryService categoryService;
+	protected CategoryService categoryService;
 
 	public void addMissingObjects(ModelAndView modelAndView) {
 		modelAndView.addObject("categs", categoryService.getCategoryData());

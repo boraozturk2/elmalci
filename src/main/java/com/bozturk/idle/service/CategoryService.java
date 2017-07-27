@@ -1,6 +1,7 @@
 package com.bozturk.idle.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,16 @@ public class CategoryService {
 			}
 		}
 		return categoryDto;
+	}
+	
+	public Set<Category> getCategoryData(int level) {
+
+		return categoryRepository.findByLevelOrderByLevelAscSortOrderAsc(level);
+	}
+	
+	public Set<Category> getCategoryDataByParentCategory(long parentId) {
+
+		return categoryRepository.findByParentIdOrderByLevelAscSortOrderAsc(parentId);
 	}
 
 }

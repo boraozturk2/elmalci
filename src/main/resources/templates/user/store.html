@@ -184,7 +184,7 @@
                            <div class="products-sort-by">
                               <strong class="label label-danger"><th:block th:text="#{user.store.table.ilce}"></th:block></strong> 
                               <select  id="countyId" name="countyId" class="form-control">
-                                 <option value="İlşçe Seçiniz">Önce Şehir Seçiniz</option>
+                                 <option value="İlçe Seçiniz">Önce Şehir Seçiniz</option>
                                  <option th:each="county : ${counties}" th:value="${county.countyId}" th:text="${county.countyName}" th:field="*{countyId}">Wireframe</option>
                               </select>
                            </div>

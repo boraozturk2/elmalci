@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<title>Elmalci Elektrik Malzemeleri Pazarı</title>
+	
+	<!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" -->
+  	<!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script -->
+  	<!--  script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script  -->
+    <script src="/js/jquery-1.11.0.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.cookie.js"></script>
+    <script src="/js/waypoints.min.js"></script>
+    <script src="/js/modernizr.js"></script>
+    <script src="/js/bootstrap-hover-dropdown.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/front.js"></script>
+  	<script src="/js/respond.min.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Elmalci Elektrik Malzemeleri Pazarı">
+    <meta name="author" content="Bora Ozturk">
+    <meta name="keywords" content="Elektrik Malzemeleri">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
+
+    <!-- styles -->
+    <link href="/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.css" rel="stylesheet">
+    <link href="/css/owl.theme.css" rel="stylesheet">
+	<link href="/css/registration.css" rel="stylesheet">
+
+    <!-- theme stylesheet -->
+    <link href="/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
+
+    <!-- your stylesheet with modifications -->
+    <link href="/css/custom.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/kablo.png">
+   
+
+   <script type="text/javascript">
+      $(document).ready(function() { 
+         $('#cat1').change(
+            function() {
+               $.getJSON('/user/categories', {
+              	parentId : $(this).val(),
+                  ajax : 'true'
+               }, function(data) {
+            	  var html = '<option value="">Kategori Seçiniz</option>';
+                  var len = data.length;
+                  for ( var i = 0; i < len; i++) {
+                     html += '<option value="' + data[i].id + '">'
+                           + data[i].name + '</option>';
+                  }
+                  html += '</option>';
+       
+                  $('#cat2').html(html);
+               });
+            });
+      });
+      $(document).ready(function() { 
+          $('#cat2').change(
+             function() {
+                $.getJSON('/user/categories', {
+               	parentId : $(this).val(),
+                   ajax : 'true'
+                }, function(data) {
+             	  var html = '<option value="">Alt Kategori Seçiniz</option>';
+                   var len = data.length;
+                   for ( var i = 0; i < len; i++) {
+                      html += '<option value="' + data[i].id + '">'
+                            + data[i].name + '</option>';
+                   }
+                   html += '</option>';
+        
+                   $('#cat3').html(html);
+                });
+             });
+       });
+      $(document).ready(function() { 
+         $('#cat3').change(
+           function() {	 
+             $.getJSON('/user/product/category', {
+            	categoryId : $(this).val(),
+                ajax : 'true'
+             }, function(data) {
+          	  var html = '';
+                var len = data.length;
+                for ( var i = 0; i < len; i++) {
+                   html += '<tr>'
+                	     + '<td>' + data[i].make + '</td>'
+                         + '<td>' + data[i].model + '</td>'
+                         + '<td>' + data[i].description + '</td>'
+                         + '<td>' + data[i].categoryName + '</td>'
+                         + '<td>' + (data[i].sideCategoryName !=null ? data[i].sideCategoryName : '-') + '</td>'
+                         + '<td><a href="/user/product?productId=+'+data[i].productId+'" class="btn btn-primary btn-sm"><i class="fa fa-book" aria-hidden="true"></i></a></td>'
+                         + '</tr>';
+                }
+                html += '';
+     
+                $('#product_table_body').html(html);
+             });
+          });
+    });   
+   </script>
+   
+   </head>   
+      
+
+<body>
+
+   <div th:replace="fragments/header :: myheader"></div>
+
+   <div id="all">
+      <div id="content">
+         <div class="container">
+            <div class="col-md-3">
+               <div th:replace="user/leftnav :: userleftnav"></div>
+            </div>
+            
+            <div class="col-md-9">
+                    <div class="box">
+                    
+                        <h1><i class="fa fa-cog fa-x" aria-hidden="true"></i>&nbsp;<th:block th:text="#{user.product.header}"></th:block></h1>
+                        <p class="lead" th:text="#{user.product.header.lead}"></p>
+                        <p class="text-muted" th:text="#{user.product.header.text}"></p>
+                        <hr/>
+                        <form name="f" th:action="@{/user/product}" method="get" class="form-horizontal">
+                        <strong class="label label-danger"><th:block th:text="#{user.product.cat1}"></th:block></strong>
+                         <select class="form-control" id="cat1" name="cat1" required>
+                           <option value="">Ana Kategori</option>
+                           <option th:each="c1 : ${cat1s}" th:value="${c1.id}" th:text="${c1.name}" th:selected="(${c1.id} == *{cat1})">Cat1</option>
+                        </select>
+                     
+                       <strong class="label label-danger"><th:block th:text="#{user.product.cat2}"></th:block></strong>
+                         <select class="form-control" id="cat2" name="cat2" required>
+                           <option th:each="c2 : ${cat2s}" th:value="${c2.id}" th:text="${c2.name}" th:selected="(${c2.id} == *{cat2})">Cat2</option>
+                        </select>
+                        
+                        <strong class="label label-danger"><th:block th:text="#{user.product.cat3}"></th:block></strong>
+                         <select class="form-control" id="cat3" name="cat3" required>
+                           <option th:each="c3 : ${cat3s}" th:value="${c3.id}" th:text="${c3.name}" th:selected="(${c3.id} == *{cat3})">Cat3</option>
+                        </select>
+                        <br/>
+                           
+                             
+                       <hr/>
+                          
+                       
+                       <!-- a th:href="@{/user/product}" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i><th:block th:text="#{user.product.table.action.new}"></th:block></a-->
+                       <span class="pull-center"><button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> <th:block th:text="#{user.product.table.action.new}"></th:block> </button></span>
+                       </form>
+                       <div class="table-responsive">
+                         <table id="product_table" class="table table-hover">
+                             <thead>
+                                 <tr>
+                                     <th th:text="#{user.product.table.make}">Marka</th>
+                                     <th th:text="#{user.product.table.model}">Model</th>
+                                     <th th:text="#{user.product.table.description}">Açıklama</th>
+                                     <th th:text="#{user.product.table.category}">Kategory</th>
+                                     <th th:text="#{user.product.table.sidecategory}">Yan kategory</th>
+                                     <th th:text="#{user.product.table.action}">Düzenle</th>
+                                 </tr>
+                             </thead>
+                             <tbody  id="product_table_body">
+                                 <tr th:each="product : ${products}">
+                                     <td th:text="${product.make}"></td>
+                                     <td th:text="${product.model}"></td>
+                                     <td th:text="${product.description}"></td>
+                                     <td th:text="${product.categoryName}"></td>
+                                     <td th:text="${product.sideCategoryName}"></td>
+                                     <td><a th:href="@{/user/product(productId=${product.productId})}" class="btn btn-primary btn-sm"><i class="fa fa-book" aria-hidden="true"></i></a></td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                  </div>
+              </div>          
+         </div>
+      </div>
+   </div>
+
+   <div th:replace="fragments/footer :: myfooter"></div>
+
+</body>
+
+</html>
