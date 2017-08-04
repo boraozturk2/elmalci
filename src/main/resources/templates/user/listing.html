@@ -9,6 +9,8 @@
   	<!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script -->
   	<!--  script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script  -->
     <script src="/js/jquery-1.11.0.min.js"></script>
+    <script src="/js/jquery-ui-1-11-0.min.js"></script>
+    <script src="/js/jquery.easy-autocomplete.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.cookie.js"></script>
     <script src="/js/waypoints.min.js"></script>
@@ -17,6 +19,8 @@
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/front.js"></script>
   	<script src="/js/respond.min.js"></script>
+   <script src="/js/front.js"></script>
+   
 
     <meta charset="utf-8">
     <meta name="robots" content="all,follow">
@@ -31,6 +35,8 @@
 
     <!-- styles -->
     <link href="/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/easy-autocomplete.min.css" rel="stylesheet">
+    <link href="/css/easy-autocomplete.themes.min.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/animate.min.css" rel="stylesheet">
     <link href="/css/owl.carousel.css" rel="stylesheet">
@@ -122,7 +128,38 @@
                });
             });
       });
-   </script>
+     
+     var options = {
+
+   		  url: function(phrase) {
+   		    return "/user/product/category/make?make="+phrase+""+ "&categoryId="+ $('#cat3').val();;
+   		  },
+
+   		  getValue: function(element) {
+   		    return element;
+   		  },
+
+   		  ajaxSettings: {
+   		    dataType: "json",
+   		    method: "POST",
+   		    data: {
+   		      dataType: "json"
+   		    }
+   		  },
+
+   		  preparePostData: function(data) {
+   		    data.phrase = $("#make").val();
+   		    return data;
+   		  },
+
+   		  requestDelay: 300
+   		};
+    
+     $(document).ready(function() { 
+    	$("#make").easyAutocomplete(options);
+     });
+    
+    </script>
 </head>
 
 <body>
@@ -138,19 +175,26 @@
             
             <div class="col-md-9">
               <div class="box">
-                  <h1 th:text="#{user.product.header}">My Store</h1>
-                  <p class="lead" th:text="#{user.product.header.lead}"></p>
-                  <p class="text-muted" th:text="#{user.product.header.text}"></p>
+                  <h1 th:text="#{user.listing.header}">My Store</h1>
+                  <p class="text-muted" th:text="#{user.listing.header.text}"></p>
 
                   <hr/>
-                  <form name="f" th:action="@{/user/product}" th:object="${productDto}" method="post" class="form-horizontal">
+                  <form name="f" th:action="@{/user/listing}" th:object="${listingDto}" method="post" class="form-horizontal">
                   
-                  <input type="hidden" id="productId" name="productId" th:field="*{productId}">
+                  <input type="hidden" id="listingId" name="listingId" th:field="*{listingId}">
                   
                   <div class="col-md-9" th:if="${not #strings.isEmpty(errorMessage)}">
                      <div class="products-sort-by">
                         <label  th:text="${errorMessage}" class="alert alert-danger"></label>
                      </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                   <strong class="label label-danger"><th:block th:text="#{user.listing.store}"></th:block></strong>
+                      <select class="form-control" id="storeId" name="storeId" required>
+                        <option value="">Mağaza Seçiniz</option>
+                        <option th:each="s : ${stores}" th:value="${s.storeId}" th:text="${s.storeName}" th:selected="(${s.storeId} == *{storeId})">Cat1</option>
+                     </select>
                   </div>
                   
                  <div class="col-md-6">
@@ -160,7 +204,7 @@
                         <option th:each="c1 : ${cat1s}" th:value="${c1.id}" th:text="${c1.name}" th:selected="(${c1.id} == *{cat1})">Cat1</option>
                      </select>
                   </div>
-                  
+           
                   <div class="col-md-6">
                     <strong class="label label-danger"><th:block th:text="#{user.product.cat2}"></th:block></strong>
                       <select class="form-control" id="cat2" name="cat2" required>
@@ -175,9 +219,8 @@
                         <option th:each="c3 : ${cat3s}" th:value="${c3.id}" th:text="${c3.name}" th:selected="(${c3.id} == *{cat3})">Cat3</option>
                      </select>
                    </div>
-                   
                   
-                   <div class="col-md-9">
+                    <div class="col-md-9">
                         <label for="make" class="label label-danger"><strong><th:block th:text="#{user.product.table.make}"></th:block></strong></label>
                         <input type="text" class="form-control" id="make" name="make" th:field="*{make}" required/>
                    </div>
@@ -188,55 +231,44 @@
                    </div>
                    
                    <div class="col-md-9">
-                       <label for="model" class="label label-danger"><strong><th:block th:text="#{user.product.table.serial}"></th:block></strong></label>
+                       <label for="serial" class="label label-danger"><strong><th:block th:text="#{user.product.table.serial}"></th:block></strong></label>
                        <input type="text" class="form-control" id="serial" name="serial" th:field="*{serial}" required/>
                    </div>
-                     
+                   
+                   <div class="col-md-9">
+                       <label for="header" class="label label-danger"><strong><th:block th:text="#{user.listing.header2}"></th:block></strong></label>
+                       <input type="text" class="form-control" id="header" name="header" th:field="*{header}" required/>
+                   </div>
+                   
+                   <div class="col-md-9">
+                       <label for="price" class="label label-danger"><strong><th:block th:text="#{user.listing.price}"></th:block></strong></label>
+                       <input type="text" class="form-control" id="price" name="price" th:field="*{price}" required/>
+                   </div>
+                   
+                   <div class="col-md-9">
+                       <label for="count" class="label label-danger"><strong><th:block th:text="#{user.listing.count}"></th:block></strong></label>
+                       <input type="text" class="form-control" id="count" name="count" th:field="*{count}"/>
+                   </div>
+                   
+                   <div class="col-md-9">
+                       <label for="phone" class="label label-primary"><strong><th:block th:text="#{user.listing.phone}"></th:block></strong></label>
+                       <input type="text" class="form-control" id="phone" name="phone" th:field="*{phone}" required/>
+                   </div>
+                   
                    <div class="col-md-12">
-                       <label for="description" class="label label-primary"><strong><th:block th:text="#{user.product.table.description}"></th:block></strong></label>
+                       <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.description}"></th:block></strong></label>
                        <input type="text" class="form-control" id="description" name="description" th:field="*{description}"/>
                    </div>                        
-                     
-                   <div class="col-md-9">
-                       <label for="barcode" class="label label-primary"><strong><th:block th:text="#{user.product.table.barcode}"></th:block></strong></label>
-                       <input type="text" class="form-control" id="barcode" name="barcode" th:field="*{barcode}"/>
-                   </div>
+                   
                  
-                 <hr>
+                   <hr>
                     
-                   <div class="col-md-9">
-                        <label class="label label-primary">Yan Kategori Bilgileri:</label>
-                   </div>
-   
-                   <div class="col-md-6">
-                       <strong class="label label-primary"><th:block th:text="#{user.product.cat1}"></th:block></strong>
-                         <select class="form-control" id="cat1Side" name="cat1Side">
-                           <option value="">Ana Kategori</option>
-                           <option th:each="c1Side : ${cat1Sides}" th:value="${c1Side.id}" th:text="${c1Side.name}" th:selected="(${c1Side.id} == *{cat1Side})">Cat1</option>
-                       </select>
-                  </div>
-                  
-                  <div class="col-md-6">
-                    <strong class="label label-primary"><th:block th:text="#{user.product.cat2}"></th:block></strong>
-                      <select class="form-control" id="cat2Side" name="cat2Side">
-                        <option th:each="c2Side : ${cat2Sides}" th:value="${c2Side.id}" th:text="${c2Side.name}" th:selected="(${c2Side.id} == *{cat2Side})">Cat2</option>
-                     </select>
+                   <div class="form-group">
+                      <div class="col-md-9 text-center">
+                        <br/>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>OK</button>
                      </div>
-                     
-                    
-                   <div class="col-md-6">
-                     <strong class="label label-primary"><th:block th:text="#{user.product.cat3}"></th:block></strong>
-                      <select class="form-control" id="cat3Side" name="cat3Side">
-                        <option th:each="c3Side : ${cat3Sides}" th:value="${c3Side.id}" th:text="${c3Side.name}" th:selected="(${c3Side.id} == *{cat3Side})">Cat3</option>
-                     </select>
-                   </div>          
-                  
-                    <div class="form-group">
-                             <div class="col-md-9 text-center">
-                                 <br/>
-                                  <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>OK</button>
-                             </div>
-                        </div> 
+                   </div> 
                 </form>       
 
                </div>

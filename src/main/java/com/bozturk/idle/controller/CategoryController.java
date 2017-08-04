@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bozturk.idle.dto.CategoryDto;
 import com.bozturk.idle.model.Category;
-import com.bozturk.idle.model.address.City;
 import com.bozturk.idle.service.CategoryService;
 
 @Controller

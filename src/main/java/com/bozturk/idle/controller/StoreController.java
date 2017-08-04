@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bozturk.idle.dto.StoreDto;
-import com.bozturk.idle.model.User;
 import com.bozturk.idle.model.UserStore;
 import com.bozturk.idle.model.address.Neighborhood;
 import com.bozturk.idle.repository.UserRepository;
@@ -26,6 +25,7 @@ import com.bozturk.idle.repository.address.CityRepository;
 import com.bozturk.idle.repository.address.CountryRepository;
 import com.bozturk.idle.repository.address.CountyRepository;
 import com.bozturk.idle.repository.address.NeighborhoodRepository;
+import com.bozturk.idle.service.StoreService;
 import com.bozturk.idle.service.UserPrincipal;
 
 @Controller
@@ -51,6 +51,9 @@ public class StoreController extends MainController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private StoreService storeService;
 	
 	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/user/store", method = RequestMethod.GET)
@@ -90,11 +93,7 @@ public class StoreController extends MainController {
 	@RequestMapping(value = "/user/stores", method = RequestMethod.GET)
 	public ModelAndView getUserStores() {
 
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserPrincipal userPr = (UserPrincipal)authentication.getPrincipal();
-		
-		User user = userRepository.findByEmail(userPr.getUsername());
-		List<UserStore> userStores = userStoreRepository.findByUserId(user.getId());
+		List<UserStore> userStores = storeService.getUserStores();
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("userStores", userStores);

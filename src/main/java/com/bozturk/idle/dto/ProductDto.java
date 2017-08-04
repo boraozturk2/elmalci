@@ -7,27 +7,28 @@ import com.bozturk.idle.model.Category;
 
 public class ProductDto {
 
-	private Long productId;
+	protected Long productId;
 
-	private Long cat1;
-	private Long cat1Side;
-	private Set<Category> cat1s = new HashSet<>();
-	private Set<Category> cat1Sides = new HashSet<>();
+	protected Long cat1;
+	protected Long cat1Side;
+	protected Set<Category> cat1s = new HashSet<>();
+	protected Set<Category> cat1Sides = new HashSet<>();
 
-	private Long cat2;
-	private Long cat2Side;
-	private Set<Category> cat2s = new HashSet<>();
-	private Set<Category> cat2Sides = new HashSet<>();
+	protected Long cat2;
+	protected Long cat2Side;
+	protected Set<Category> cat2s = new HashSet<>();
+	protected Set<Category> cat2Sides = new HashSet<>();
 
-	private Long cat3;
-	private Long cat3Side;
-	private Set<Category> cat3s = new HashSet<>();
-	private Set<Category> cat3Sides = new HashSet<>();
+	protected Long cat3;
+	protected Long cat3Side;
+	protected Set<Category> cat3s = new HashSet<>();
+	protected Set<Category> cat3Sides = new HashSet<>();
 
-	private String make;
-	private String model;
-	private String description;
-	private String barcode;
+	protected String make;
+	protected String model;
+	protected String serial;
+	protected String description;
+	protected String barcode;
 
 	public ProductDto() {
 	}
@@ -167,14 +168,22 @@ public class ProductDto {
 	public void setCat3Sides(Set<Category> cat3Sides) {
 		this.cat3Sides = cat3Sides;
 	}
+	
+	public String getSerial() {
+		return serial;
+	}
+
+	public void setSerial(String serial) {
+		this.serial = serial;
+	}
 
 	@Override
 	public String toString() {
 		return "ProductDto [productId=" + productId + ", cat1=" + cat1 + ", cat1Side=" + cat1Side + ", cat1s=" + cat1s
 				+ ", cat1Sides=" + cat1Sides + ", cat2=" + cat2 + ", cat2Side=" + cat2Side + ", cat2s=" + cat2s
 				+ ", cat2Sides=" + cat2Sides + ", cat3=" + cat3 + ", cat3Side=" + cat3Side + ", cat3s=" + cat3s
-				+ ", cat3Sides=" + cat3Sides + ", make=" + make + ", model=" + model + ", description=" + description
-				+ ", barcode=" + barcode + "]";
+				+ ", cat3Sides=" + cat3Sides + ", make=" + make + ", model=" + model + ", serial=" + serial
+				+ ", description=" + description + ", barcode=" + barcode + "]";
 	}
 
 }

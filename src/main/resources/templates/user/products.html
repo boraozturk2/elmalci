@@ -97,6 +97,7 @@
                    html += '<tr>'
                 	     + '<td>' + data[i].make + '</td>'
                          + '<td>' + data[i].model + '</td>'
+                         + '<td>' + data[i].serial + '</td>'
                          + '<td>' + data[i].description + '</td>'
                          + '<td>' + data[i].categoryName + '</td>'
                          + '<td>' + (data[i].sideCategoryName !=null ? data[i].sideCategoryName : '-') + '</td>'
@@ -157,12 +158,14 @@
                        <!-- a th:href="@{/user/product}" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i><th:block th:text="#{user.product.table.action.new}"></th:block></a-->
                        <span class="pull-center"><button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> <th:block th:text="#{user.product.table.action.new}"></th:block> </button></span>
                        </form>
+                       <div class="box">
                        <div class="table-responsive">
                          <table id="product_table" class="table table-hover">
                              <thead>
                                  <tr>
                                      <th th:text="#{user.product.table.make}">Marka</th>
                                      <th th:text="#{user.product.table.model}">Model</th>
+                                     <th th:text="#{user.product.table.serial}">Seri</th>
                                      <th th:text="#{user.product.table.description}">Açıklama</th>
                                      <th th:text="#{user.product.table.category}">Kategory</th>
                                      <th th:text="#{user.product.table.sidecategory}">Yan kategory</th>
@@ -173,6 +176,7 @@
                                  <tr th:each="product : ${products}">
                                      <td th:text="${product.make}"></td>
                                      <td th:text="${product.model}"></td>
+                                     <td th:text="${product.serial}"></td>
                                      <td th:text="${product.description}"></td>
                                      <td th:text="${product.categoryName}"></td>
                                      <td th:text="${product.sideCategoryName}"></td>
@@ -181,6 +185,7 @@
                              </tbody>
                          </table>
                      </div>
+                  </div>
                   </div>
               </div>          
          </div>

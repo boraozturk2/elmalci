@@ -57,7 +57,7 @@
             <div class="col-md-6" data-animate="fadeInDown">
             	
             	<ul class="menu">
-                	<li sec:authorize="isAuthenticated()" ><span class="label label-primary">Merhaba <th:block sec:authentication="principal.userAlias"></th:block></span></li>
+                	<li sec:authorize="isAuthenticated()" ><span class="label label-primary"><th:block sec:authentication="principal.userAlias"></th:block></span></li>
             		<li sec:authorize="!isAuthenticated()"><a href="#" data-toggle="modal" data-target="#login-modal"><th:block th:text="#{login}"/></a></li>
                     <li sec:authorize="!isAuthenticated()"><a href="#" th:href="@{/registration}"><th:block th:text="#{register}"/></a></li>
                     <li><a th:href="@{/user/stores}"><th:block th:text="#{lastViewed}"/></a></li>

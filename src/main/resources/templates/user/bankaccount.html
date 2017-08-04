@@ -22,6 +22,7 @@
                         <p class="text-muted" th:text="#{user.bankaccount.header.text}"></p>
 
                         <hr/>
+                        
                         <form name="f" th:action="@{/user/bankaccount}" th:object="${bankAccount}" method="post" class="form-horizontal">
                         
                         <input type="hidden" id="accountId" name="accountId" th:field="*{accountId}">

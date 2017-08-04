@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+   <div th:replace="fragments/header :: myheader"></div>
+
+   <div id="all">
+      <div id="content">
+         <div class="container">
+            <div class="col-md-3">
+               <div th:replace="user/leftnav :: userleftnav"></div>
+            </div>
+            
+            <div class="col-md-9">
+                    <div class="box">
+                    
+                        <h1><i class="fa fa-home fa-2x" aria-hidden="true"></i><th:block th:text="#{user.listing.header}"></th:block></h1>
+                        <p class="lead" th:text="#{user.listing.header.lead}"></p>
+                        <!-- p class="text-muted" th:text="#{user.listing.header.text}"></p-->
+
+                       <hr/>
+                       <a th:href="@{/user/listing}" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i><th:block th:text="#{user.listing.table.action.new}"></th:block></a>
+                       <div class="box">
+                       <div class="table-responsive">
+                         <table class="table table-hover">
+                             <thead>
+                                 <tr>
+                                     <th th:text="#{user.listing.table.name}">Listing Image</th>
+                                     <th th:text="#{user.listing.table.category}">Category</th>
+                                     <th th:text="#{user.listing.table.make}">Make</th>
+                                     <th th:text="#{user.listing.table.model}">Model</th>
+                                     <th th:text="#{user.listing.table.store}"></th>
+                                     <th th:text="#{user.listing.table.header}">Fiyat</th>
+                                     <th th:text="#{user.listing.table.count}">Fiyat</th>
+                                     <th th:text="#{user.listing.table.price}">Fiyat</th>
+                                     <th th:text="#{user.listing.table.state}">İşlem</th>
+                                     <th th:text="#{user.listing.table.action}">İşlem</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr th:each="listing : ${listings}">
+                                     <td ></td>
+                                     <td th:text="${listing.product.categoryName}"></td>
+                                     <td th:text="${listing.product.make}"></td>
+                                     <td th:text="${listing.product.model}"></td>
+                                     <td th:text="${listing.store.storeName}"></td>
+                                     <td th:text="${listing.header}"></td>
+                                     <td th:text="${listing.count}"></td>
+                                     <td th:text="${listing.price}"></td>
+                                     <td th:text="${listing.state}"></td>
+                                     <td><a th:href="@{/user/listing(listingId=${listing.listingId})}" class="btn btn-primary btn-sm"><i class="fa fa-book" aria-hidden="true"></i></a></td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                  </div>
+                  </div>
+              </div>          
+         </div>
+      </div>
+   </div>
+
+   <div th:replace="fragments/footer :: myfooter"></div>
+
+</body>
+
+</html>

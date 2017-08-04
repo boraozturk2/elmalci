@@ -26,6 +26,10 @@ public class Product {
 	@NotEmpty(message = "*Model boş olamaz")
 	private String model;
 
+	@Column(name = "serial", length = 100)
+	@NotEmpty(message = "*SeriNo boş olamaz")
+	private String serial;
+
 	@Column(name = "barcode", length = 100)
 	private String barcode;
 
@@ -150,6 +154,14 @@ public class Product {
 
 	public void setSideCategoryName(String sideCategoryName) {
 		this.sideCategoryName = sideCategoryName;
+	}
+
+	public String getSerial() {
+		return serial;
+	}
+
+	public void setSerial(String serial) {
+		this.serial = serial;
 	}
 
 }
