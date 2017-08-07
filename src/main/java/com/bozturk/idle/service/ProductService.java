@@ -15,9 +15,15 @@ public class ProductService {
 	private ProductDao productDao;
 	
 	
-	public List<Product> findDistinctProductsByCategory(Long categoryId, String makeLike) {
-		
-		return productDao.findDistinctProductsByCategory(categoryId, makeLike);
-		
+	public List<Product> findDistinctProductsByCategoryMake(Long categoryId, String makeLike) {
+		return productDao.findDistinctProductsByCategoryMake(categoryId, makeLike);
+	}
+	
+	public List<Product> findDistinctProductsByCategoryMakeModel(Long categoryId, String make, String modelLike) {
+		return productDao.findDistinctProductsByCategoryModel(categoryId, make, modelLike);
+	}
+	
+	public List<Product> findDistinctProductsByCategoryMakeModelSerial(Long categoryId, String make, String model, String serialLike) {
+		return productDao.findDistinctProductsByCategorySerial(categoryId, make, model, serialLike);
 	}
 }

@@ -132,7 +132,7 @@
      var options = {
 
    		  url: function(phrase) {
-   		    return "/user/product/category/make?make="+phrase+""+ "&categoryId="+ $('#cat3').val();;
+   		    return "/user/product/category/make?make="+phrase+ "&categoryId="+ $('#cat3').val();
    		  },
 
    		  getValue: function(element) {
@@ -152,13 +152,81 @@
    		    return data;
    		  },
 
-   		  requestDelay: 300
+   		  requestDelay: 500
    		};
     
      $(document).ready(function() { 
     	$("#make").easyAutocomplete(options);
      });
     
+     var optionsModel = {
+
+   		  url: function(phrase) {
+   		    return "/user/product/category/make/model?model="+phrase+"&categoryId="+ $('#cat3').val()+"&make="+ $('#make').val();
+   		  },
+
+   		  getValue: function(element) {
+   		    return element;
+   		  },
+
+   		  ajaxSettings: {
+   		    dataType: "json",
+   		    method: "POST",
+   		    data: {
+   		      dataType: "json"
+   		    }
+   		  },
+
+   		  preparePostData: function(data) {
+   		    data.phrase = $("#model").val();
+   		    return data;
+   		  },
+
+   		  requestDelay: 500
+   		};
+    
+     $(document).ready(function() { 
+    	$("#model").easyAutocomplete(optionsModel);
+     });
+     
+     var optionsSerial = {
+
+   		  url: function(phrase) {
+   		    return "/user/product/category/make/model/serial?serial="+phrase+"&categoryId="+ $('#cat3').val()+"&make="+ $('#make').val()+"&model="+ $('#model').val();
+   		  },
+
+   		  getValue: function(element) {
+   		    return element;
+   		  },
+
+   		  ajaxSettings: {
+   		    dataType: "json",
+   		    method: "POST",
+   		    data: {
+   		      dataType: "json"
+   		    }
+   		  },
+
+   		  preparePostData: function(data) {
+   		    data.phrase = $("#serial").val();
+   		    return data;
+   		  },
+
+   		  requestDelay: 500
+   		};
+    
+     $(document).ready(function() { 
+    	$("#serial").easyAutocomplete(optionsSerial);
+     });
+     
+     function clearModel() {
+    	 document.getElementById("model").value="";
+    	 clearSerial();
+     }
+     function clearSerial() {
+    	 document.getElementById("serial").value="";
+     }
+	 
     </script>
 </head>
 
@@ -222,12 +290,12 @@
                   
                     <div class="col-md-9">
                         <label for="make" class="label label-danger"><strong><th:block th:text="#{user.product.table.make}"></th:block></strong></label>
-                        <input type="text" class="form-control" id="make" name="make" th:field="*{make}" required/>
+                        <input type="text" class="form-control" id="make" name="make" th:field="*{make}" onblur="clearModel()" required />
                    </div>
                      
                    <div class="col-md-9">
                        <label for="model" class="label label-danger"><strong><th:block th:text="#{user.product.table.model}"></th:block></strong></label>
-                       <input type="text" class="form-control" id="model" name="model" th:field="*{model}" required/>
+                       <input type="text" class="form-control" id="model" name="model" th:field="*{model}" onblur="clearSerial()" required/>
                    </div>
                    
                    <div class="col-md-9">

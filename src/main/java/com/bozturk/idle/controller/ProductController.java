@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.util.StringUtils;
 
 import com.bozturk.idle.dto.IdDto;
 import com.bozturk.idle.dto.ProductDto;
@@ -127,8 +126,20 @@ public class ProductController extends MainController {
 
 	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/user/product/category/make", method = RequestMethod.POST)
-	public @ResponseBody List<Product> getProduct(@RequestParam Long categoryId, @RequestParam String make) {
-		return productService.findDistinctProductsByCategory(categoryId, make);
+	public @ResponseBody List<Product> getProductMake(@RequestParam Long categoryId, @RequestParam String make) {
+		return productService.findDistinctProductsByCategoryMake(categoryId, make);
+	}
+	
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/user/product/category/make/model", method = RequestMethod.POST)
+	public @ResponseBody List<Product> getProductModel(@RequestParam Long categoryId, @RequestParam String make, @RequestParam String model) {
+		return productService.findDistinctProductsByCategoryMakeModel(categoryId, make, model);
+	}
+	
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/user/product/category/make/model/serial", method = RequestMethod.POST)
+	public @ResponseBody List<Product> getProductSerial(@RequestParam Long categoryId, @RequestParam String make, @RequestParam String model, @RequestParam String serial) {
+		return productService.findDistinctProductsByCategoryMakeModelSerial(categoryId, make, model, serial);
 	}
 	
 	@PreAuthorize("hasRole('USER')")
