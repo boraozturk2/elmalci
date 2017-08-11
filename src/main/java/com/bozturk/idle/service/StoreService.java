@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bozturk.idle.model.User;
 import com.bozturk.idle.model.UserStore;
 import com.bozturk.idle.repository.UserRepository;
 import com.bozturk.idle.repository.UserStoreRepository;
 
+@Transactional
 @Service("storeService")
 public class StoreService {
 

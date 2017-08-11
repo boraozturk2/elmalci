@@ -19,5 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	
 	@Query("select distinct p.make from Product p where (category_id=:categoryId or side_category_id=:categoryId) and make like :makeP% and active=true")
 	Set<Product> findByCategoryIdOrSideCategoryIdAndMake(@Param("categoryId") long categoryId, @Param("makeP") String makeP);
+	
+	Product findByCategoryIdAndMakeAndModelAndSerial(@Param("categoryId") long categoryId, @Param("make") String make, @Param("model") String model, @Param("serial") String serial);
 
 }

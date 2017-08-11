@@ -128,10 +128,43 @@ public class UserListing {
 		this.listingPhotos = listingPhotos;
 	}
 
+	public String getHeader() {
+		return header;
+	}
+
+	public void setHeader(String header) {
+		this.header = header;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	@Override
 	public String toString() {
 		return "UserListing [listingId=" + listingId + ", user=" + user + ", store=" + store + ", product=" + product
-				+ ", count=" + count + ", state=" + state + ", active=" + active + ", listingPhotos=" + listingPhotos
+				+ ", count=" + count + ", header=" + header + ", description=" + description + ", price=" + price
+				+ ", phone=" + phone + ", state=" + state + ", active=" + active + ", listingPhotos=" + listingPhotos
 				+ "]";
 	}
 

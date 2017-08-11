@@ -227,6 +227,8 @@
     	 document.getElementById("serial").value="";
      }
 	 
+     
+    
     </script>
 </head>
 
@@ -278,8 +280,7 @@
                       <select class="form-control" id="cat2" name="cat2" required>
                         <option th:each="c2 : ${cat2s}" th:value="${c2.id}" th:text="${c2.name}" th:selected="(${c2.id} == *{cat2})">Cat2</option>
                      </select>
-                     </div>
-                     
+                   </div>
                     
                    <div class="col-md-6">
                      <strong class="label label-danger"><th:block th:text="#{user.product.cat3}"></th:block></strong>
@@ -320,15 +321,14 @@
                    
                    <div class="col-md-9">
                        <label for="phone" class="label label-primary"><strong><th:block th:text="#{user.listing.phone}"></th:block></strong></label>
-                       <input type="text" class="form-control" id="phone" name="phone" th:field="*{phone}" required/>
+                       <input type="text" class="form-control" id="phone" name="phone" th:field="*{phone}"/>
                    </div>
                    
-                   <div class="col-md-12">
+                   <div class="col-md-9">
                        <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.description}"></th:block></strong></label>
                        <input type="text" class="form-control" id="description" name="description" th:field="*{description}"/>
                    </div>                        
                    
-                 
                    <hr>
                     
                    <div class="form-group">

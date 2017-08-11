@@ -15,8 +15,17 @@ public class ListingDto extends ProductDto {
 	private String description;
 	private BigDecimal price;
 	private Integer count;
+	private String file;
 
 	public ListingDto() {
+	}
+
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
 	}
 
 	public Long getListingId() {
@@ -26,7 +35,7 @@ public class ListingDto extends ProductDto {
 	public void setListingId(Long listingId) {
 		this.listingId = listingId;
 	}
-	
+
 	public Long getStoreId() {
 		return storeId;
 	}

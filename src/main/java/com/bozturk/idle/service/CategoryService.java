@@ -5,11 +5,13 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bozturk.idle.dto.CategoryDto;
 import com.bozturk.idle.model.Category;
 import com.bozturk.idle.repository.CategoryRepository;
 
+@Transactional
 @Service("categoryService")
 public class CategoryService {
 

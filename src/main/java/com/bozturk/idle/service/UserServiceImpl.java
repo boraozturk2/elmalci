@@ -25,6 +25,7 @@ import com.bozturk.idle.repository.RoleRepository;
 import com.bozturk.idle.repository.UserRepository;
 import com.bozturk.idle.repository.UserTokenRepository;
 
+@Transactional
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
