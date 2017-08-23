@@ -19,7 +19,7 @@
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/front.js"></script>
   	<script src="/js/respond.min.js"></script>
-   <script src="/js/front.js"></script>
+    <script src="/js/front.js"></script>
    
 
     <meta charset="utf-8">
@@ -53,65 +53,45 @@
 
    <script type="text/javascript">
      $(document).ready(function() { 
-     if (window.File && window.FileReader && window.FormData) {
-    		var $inputField = $('#file');
+        if (window.File && window.FileReader && window.FormData) {
+    		var $inputField = $('#file1');
 
     		$inputField.on('change', function (e) {
+    			
     			var file = e.target.files[0];
-
-    			if (file) {
-    				if (/^image\//i.test(file.type)) {
-    					readFile(file);
-    				} else {
-    					alert('Not a valid image!');
-    				}
+    			var fileType=file["type"];
+				var ValidImageTypes = ["image/gif","image/jpeg","image/jpg","image/png"];
+				
+				if (file && $.inArray(fileType,ValidImageTypes) >= 0) {
+					readFile(file);
+    				//$("#f1").submit();
+    			} else {
+    				alert('Resim Geçersiz!');
     			}
     		});
-    	} else {
-    		alert("File upload is not supported!");
-    	}
+ 	    }else {
+ 		   alert("Resim Yükleme Bu Ortamdan Desteklenmiyor!");
+ 	    }
      });
  
      function readFile(file) {
   		var reader = new FileReader();
 
-  		reader.onloadend = function () {
+  		reader.onloadend = function (e) {
   			processFile(reader.result, file.type);
+  			$("#img1").attr('src',e.target.result)
   		}
 
   		reader.onerror = function () {
-  			alert('There was an error reading the file!');
+  			alert('Resim yükleme hatası!');
   		}
 
   		reader.readAsDataURL(file);
   	}
 
-    function sendFile(fileData) {
- 		var formData = new FormData();
-
- 		formData.append('imageData', fileData);
-
- 		$.ajax({
- 			type: 'POST',
- 			url: '/your/upload/url',
- 			data: formData,
- 			contentType: false,
- 			processData: false,
- 			success: function (data) {
- 				if (data.success) {
- 					alert('Your file was successfully uploaded!');
- 				} else {
- 					alert('There was an error uploading your file!');
- 				}
- 			},
- 			error: function (data) {
- 				alert('There was an error uploading your file!');
- 			}
- 		});
- 	}
     function processFile(dataURL, fileType) {
-    	var maxWidth = 800;
-    	var maxHeight = 800;
+    	var maxWidth = 100;
+    	var maxHeight = 100;
 
     	var image = new Image();
     	image.src = dataURL;
@@ -149,13 +129,33 @@
     		dataURL = canvas.toDataURL(fileType);
 
     		sendFile(dataURL);
+    		
     	};
 
     	image.onerror = function () {
     		alert('There was an error processing your file!');
     	};
     }
-     function isUploadSupported() {
+    
+    function sendFile(fileData) {
+ 		var formData = new FormData();
+
+ 		formData.append('imageData', fileData);
+
+ 		$.ajax({
+ 			type: 'POST',
+ 			url: '/user/listingphoto',
+ 			data: formData,
+ 			contentType: false,
+ 			processData: false,
+ 		}).done(function() {
+ 		    alert( "success" );
+ 		  }) .fail(function() {
+ 			    alert( "error" );
+ 		  });
+ 	}
+    
+    function isUploadSupported() {
  	    if (navigator.userAgent.match(/(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(Windows Phone (OS 7|8.0))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
  	        return false;
  	    }
@@ -177,26 +177,28 @@
                <div th:replace="user/leftnav :: userleftnav"></div>
             </div>
             
+            
             <div class="col-md-9">
               <div class="box">
                   <h1 th:text="#{user.listing.header}">My Store</h1>
                   <p class="text-muted" th:text="#{user.listing.header.text}"></p>
 
                   <hr/>
-                  <form name="f" th:action="@{/user/listing/photo}" th:object="${photoDto}" method="post" class="form-horizontal">
+            
+                  <form id="f1" name="f1" th:action="@{/user/listingphoto}" th:object="${photoDto}" method="post" enctype="multipart/form-data" class="form-horizontal">
                   
                   <input type="hidden" id="listingId" name="listingId" th:field="*{listingId}">
-                  
+                  <input type="hidden" id="porder" name="porder" value="1">
                   <div class="col-md-9" th:if="${not #strings.isEmpty(errorMessage)}">
                      <div class="products-sort-by">
                         <label  th:text="${errorMessage}" class="alert alert-danger"></label>
                      </div>
                   </div>
-                  
-                   <div class="col-md-12">
-                       <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.file1}"></th:block></strong></label>
-                       <input type="file" accept="image/*" class="form-control" id="file" name="file" th:field="*{file}"/>
-                   </div>  
+                  <div class="col-md-6">
+                      <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.file1}"></th:block></strong></label>
+                      <input type="file" accept="image/*" capture="camera" class="form-control" id="file1" name="file1" />
+                      <img id="img1" src="#"/>
+                  </div>  
                  
                    <hr>
                     

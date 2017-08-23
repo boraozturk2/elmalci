@@ -1,5 +1,6 @@
 package com.bozturk.idle.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -7,14 +8,17 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bozturk.idle.dto.IdDto;
@@ -23,8 +27,10 @@ import com.bozturk.idle.model.Category;
 import com.bozturk.idle.model.Product;
 import com.bozturk.idle.model.User;
 import com.bozturk.idle.model.UserListing;
+import com.bozturk.idle.model.UserListingPhoto;
 import com.bozturk.idle.repository.CategoryRepository;
 import com.bozturk.idle.repository.ProductRepository;
+import com.bozturk.idle.repository.UserListingPhotoRepository;
 import com.bozturk.idle.repository.UserListingRepository;
 import com.bozturk.idle.repository.UserRepository;
 import com.bozturk.idle.repository.UserStoreRepository;
@@ -42,6 +48,9 @@ public class ListingController extends MainController {
 	
 	@Autowired
 	private UserListingRepository listingRepository;
+	
+	@Autowired
+	private UserListingPhotoRepository photoRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -167,7 +176,7 @@ public class ListingController extends MainController {
 	
 	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/user/listing", method = RequestMethod.POST)
-	public ModelAndView getProducts(@Valid ListingDto listingDto, BindingResult result, ModelAndView modelAndView) {
+	public ModelAndView setListing(@Valid ListingDto listingDto, BindingResult result, ModelAndView modelAndView) {
 
 		UserListing listing = null;
 		if (listingDto.getListingId()!=null && listingDto.getListingId()!=0) {
@@ -192,6 +201,8 @@ public class ListingController extends MainController {
 		listing.setState("E");
 		listingRepository.save(listing);
 		
+		return getPhotos(listing.getListingId(), result, modelAndView);
+		/*
 		modelAndView = getListings();
 		modelAndView.addObject("cat1", listingDto.getCat1());
 		modelAndView.addObject("cat2s", categoryService.getCategoryDataByParentCategory(listingDto.getCat1()));
@@ -200,9 +211,82 @@ public class ListingController extends MainController {
 		modelAndView.addObject("cat3", listingDto.getCat3());
 		modelAndView.addObject("listings", listingRepository.findByUserId(user.getId()));
 		return modelAndView;
+		*/
 		
 	}
 	
+	
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/user/listingphoto", method = RequestMethod.GET)
+	public ModelAndView getPhotos(Long listingId, BindingResult result, ModelAndView modelAndView) {
+
+		Set<UserListingPhoto> photos = photoRepository.findByListing(listingId);
+		UserListingPhoto photo = new UserListingPhoto();
+		photo.setListingId(listingId);
+		modelAndView.addObject("photoDto", photo);
+		modelAndView.setViewName("/user/listingphoto");
+		addMissingObjects(modelAndView);
+		return modelAndView;
+		
+	}
+	
+	/*
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/user/listingphoto", method = RequestMethod.POST)
+	public ModelAndView setPhotos(@RequestParam String imageData, ModelAndView modelAndView) {
+
+		UserListingPhoto photo = new UserListingPhoto();
+		
+		photo.setContent(Base64.getDecoder().decode(imageData));
+		/*photo.setListingId(listingId);
+		modelAndView.addObject("photoDto", photo);
+		modelAndView.setViewName("/user/listingphoto");
+		addMissingObjects(modelAndView);
+		return modelAndView;
+		*/
+		
+	//	return new ModelAndView();
+		
+//	}
+	/*
+	@Autowired
+	private HttpServletRequest request;
+	*/
+	@PreAuthorize("hasRole('USER')")
+	@PostMapping("/user/listingphoto")
+	@ResponseStatus(value = HttpStatus.OK)
+	public ModelAndView setPhotos(@RequestParam("imageData") String file1,ModelAndView modelAndView) {
+		
+		//data:image/png;base64,iVBORw312312
+
+		int splitter = file1.indexOf(";");
+		String mimeType = file1.substring(5, splitter);
+		String base64Data = file1.substring(splitter+8);
+		
+		UserListingPhoto photo = new UserListingPhoto();
+
+		try {
+			if (file1.isEmpty()) {
+				throw new IOException("Resim Kaydedilemedi");
+			}
+			
+			photo.setListingId(1L);
+			photo.setContent(base64Data);
+			photo.setPorder(1);
+			photo.setFileType(mimeType);
+			photoRepository.save(photo);
+			
+		} catch (IOException e) {
+			
+		}
+		
+		//ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("photoDto", photo);
+		modelAndView.setViewName("/user/listingphoto");
+		addMissingObjects(modelAndView);
+		return modelAndView;
+		
+	}
 	
 
 	

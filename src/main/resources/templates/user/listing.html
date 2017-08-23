@@ -219,6 +219,10 @@
     	$("#serial").easyAutocomplete(optionsSerial);
      });
      
+     function clearMake() {
+    	 document.getElementById("make").value="";
+    	 clearModel();
+     }
      function clearModel() {
     	 document.getElementById("model").value="";
     	 clearSerial();
@@ -284,44 +288,44 @@
                     
                    <div class="col-md-6">
                      <strong class="label label-danger"><th:block th:text="#{user.product.cat3}"></th:block></strong>
-                      <select class="form-control" id="cat3" name="cat3" required>
+                      <select class="form-control" id="cat3" name="cat3" onchange="clearMake()" required>
                         <option th:each="c3 : ${cat3s}" th:value="${c3.id}" th:text="${c3.name}" th:selected="(${c3.id} == *{cat3})">Cat3</option>
                      </select>
                    </div>
                   
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                         <label for="make" class="label label-danger"><strong><th:block th:text="#{user.product.table.make}"></th:block></strong></label>
                         <input type="text" class="form-control" id="make" name="make" th:field="*{make}" onblur="clearModel()" required />
                    </div>
                      
-                   <div class="col-md-9">
+                   <div class="col-md-6">
                        <label for="model" class="label label-danger"><strong><th:block th:text="#{user.product.table.model}"></th:block></strong></label>
                        <input type="text" class="form-control" id="model" name="model" th:field="*{model}" onblur="clearSerial()" required/>
                    </div>
                    
-                   <div class="col-md-9">
+                   <div class="col-md-6">
                        <label for="serial" class="label label-danger"><strong><th:block th:text="#{user.product.table.serial}"></th:block></strong></label>
                        <input type="text" class="form-control" id="serial" name="serial" th:field="*{serial}" required/>
                    </div>
                    
-                   <div class="col-md-9">
+                   <div class="col-md-6">
                        <label for="header" class="label label-danger"><strong><th:block th:text="#{user.listing.header2}"></th:block></strong></label>
                        <input type="text" class="form-control" id="header" name="header" th:field="*{header}" required/>
                    </div>
                    
-                   <div class="col-md-9">
+                   <div class="col-md-6">
                        <label for="price" class="label label-danger"><strong><th:block th:text="#{user.listing.price}"></th:block></strong></label>
-                       <input type="text" class="form-control" id="price" name="price" th:field="*{price}" required/>
+                       <input type="number" min="0.01" step="0.01" lang="en-150" class="form-control" id="price" name="price" th:field="*{price}" required/>
                    </div>
                    
-                   <div class="col-md-9">
+                   <div class="col-md-6">
                        <label for="count" class="label label-danger"><strong><th:block th:text="#{user.listing.count}"></th:block></strong></label>
-                       <input type="text" class="form-control" id="count" name="count" th:field="*{count}"/>
+                       <input type="number" min="1" class="form-control" id="count" name="count" th:field="*{count}"/>
                    </div>
                    
                    <div class="col-md-9">
                        <label for="phone" class="label label-primary"><strong><th:block th:text="#{user.listing.phone}"></th:block></strong></label>
-                       <input type="text" class="form-control" id="phone" name="phone" th:field="*{phone}"/>
+                       <input type="tel" class="form-control" id="phone" name="phone" th:field="*{phone}"/>
                    </div>
                    
                    <div class="col-md-9">

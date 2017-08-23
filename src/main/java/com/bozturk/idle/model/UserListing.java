@@ -57,10 +57,10 @@ public class UserListing {
 
 	@Column(name = "active")
 	private Boolean active = true;
-
+/*
 	@OneToMany(mappedBy="userListing", fetch=FetchType.LAZY)
 	private Set<UserListingPhoto> listingPhotos;
-
+*/
 	public UserListing() {
 	}
 
@@ -119,7 +119,7 @@ public class UserListing {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-
+/*
 	public Set<UserListingPhoto> getListingPhotos() {
 		return listingPhotos;
 	}
@@ -127,7 +127,7 @@ public class UserListing {
 	public void setListingPhotos(Set<UserListingPhoto> listingPhotos) {
 		this.listingPhotos = listingPhotos;
 	}
-
+*/
 	public String getHeader() {
 		return header;
 	}
@@ -164,8 +164,7 @@ public class UserListing {
 	public String toString() {
 		return "UserListing [listingId=" + listingId + ", user=" + user + ", store=" + store + ", product=" + product
 				+ ", count=" + count + ", header=" + header + ", description=" + description + ", price=" + price
-				+ ", phone=" + phone + ", state=" + state + ", active=" + active + ", listingPhotos=" + listingPhotos
-				+ "]";
+				+ ", phone=" + phone + ", state=" + state + ", active=" + active + "]";
 	}
 
 }

@@ -21,17 +21,19 @@ public class UserListingPhoto {
 	@Column(name = "photo_id")
 	private long photoId;
 
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, name = "listing_id")
-	private UserListing userListing;
+	@Column(name = "listing_id", length = 36)
+	private Long listingId;
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(name = "content")
-	private byte[] content;
+	private String content;
 
 	@Column(name = "file_type", length = 32)
 	private String fileType;
+	
+	@Column(name = "porder", length = 2)
+	private Integer porder;
 
 	public UserListingPhoto() {
 		// TODO Auto-generated constructor stub
@@ -45,19 +47,19 @@ public class UserListingPhoto {
 		this.photoId = photoId;
 	}
 
-	public UserListing getUserListing() {
-		return userListing;
+	public Long getListingId() {
+		return listingId;
 	}
 
-	public void setUserListing(UserListing userListing) {
-		this.userListing = userListing;
+	public void setListingId(Long listingId) {
+		this.listingId = listingId;
 	}
 
-	public byte[] getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	public void setContent(byte[] content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 
@@ -68,5 +70,16 @@ public class UserListingPhoto {
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
+
+	public Integer getPorder() {
+		return porder;
+	}
+
+	public void setPorder(Integer porder) {
+		this.porder = porder;
+	}
+
+	
+	
 
 }
