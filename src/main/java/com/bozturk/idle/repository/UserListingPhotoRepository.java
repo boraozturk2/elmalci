@@ -16,5 +16,6 @@ public interface UserListingPhotoRepository extends JpaRepository<UserListingPho
 
 	@Query("from UserListingPhoto where listing_id=:listingId")
 	Set<UserListingPhoto> findByListing(@Param("listingId") long listingId);
+	UserListingPhoto findByListingIdAndPorder(long listingId, int porder);
 
 }

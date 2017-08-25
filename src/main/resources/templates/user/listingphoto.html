@@ -63,8 +63,7 @@
 				var ValidImageTypes = ["image/gif","image/jpeg","image/jpg","image/png"];
 				
 				if (file && $.inArray(fileType,ValidImageTypes) >= 0) {
-					readFile(file);
-    				//$("#f1").submit();
+					readFile(file,"#img1",1);
     			} else {
     				alert('Resim Geçersiz!');
     			}
@@ -73,13 +72,56 @@
  		   alert("Resim Yükleme Bu Ortamdan Desteklenmiyor!");
  	    }
      });
+     
+     $(document).ready(function() { 
+         if (window.File && window.FileReader && window.FormData) {
+     		var $inputField = $('#file2');
+
+     		$inputField.on('change', function (e) {
+     			
+     			var file = e.target.files[0];
+     			var fileType=file["type"];
+ 				var ValidImageTypes = ["image/gif","image/jpeg","image/jpg","image/png"];
+ 				
+ 				if (file && $.inArray(fileType,ValidImageTypes) >= 0) {
+ 					readFile(file,"#img2",2);
+     			} else {
+     				alert('Resim Geçersiz!');
+     			}
+     		});
+  	    }else {
+  		   alert("Resim Yükleme Bu Ortamdan Desteklenmiyor!");
+  	    }
+      });
+     $(document).ready(function() { 
+         if (window.File && window.FileReader && window.FormData) {
+     		var $inputField = $('#file3');
+
+     		$inputField.on('change', function (e) {
+     			
+     			var file = e.target.files[0];
+     			var fileType=file["type"];
+ 				var ValidImageTypes = ["image/gif","image/jpeg","image/jpg","image/png"];
+ 				
+ 				if (file && $.inArray(fileType,ValidImageTypes) >= 0) {
+ 					readFile(file,"#img3",3);
+     			} else {
+     				alert('Resim Geçersiz!');
+     			}
+     		});
+  	    }else {
+  		   alert("Resim Yükleme Bu Ortamdan Desteklenmiyor!");
+  	    }
+      });
+     
+     
  
-     function readFile(file) {
+     function readFile(file, fileField, porder) {
   		var reader = new FileReader();
 
   		reader.onloadend = function (e) {
-  			processFile(reader.result, file.type);
-  			$("#img1").attr('src',e.target.result)
+  			processFile(reader.result, file.type,porder);
+  			$(fileField).attr('src',e.target.result)
   		}
 
   		reader.onerror = function () {
@@ -89,9 +131,9 @@
   		reader.readAsDataURL(file);
   	}
 
-    function processFile(dataURL, fileType) {
-    	var maxWidth = 100;
-    	var maxHeight = 100;
+    function processFile(dataURL, fileType, porder) {
+    	var maxWidth = 250;
+    	var maxHeight = 250;
 
     	var image = new Image();
     	image.src = dataURL;
@@ -102,7 +144,7 @@
     		var shouldResize = (width > maxWidth) || (height > maxHeight);
 
     		if (!shouldResize) {
-    			sendFile(dataURL);
+    			sendFile(dataURL,porder);
     			return;
     		}
 
@@ -128,7 +170,7 @@
 
     		dataURL = canvas.toDataURL(fileType);
 
-    		sendFile(dataURL);
+    		sendFile(dataURL,porder);
     		
     	};
 
@@ -137,10 +179,12 @@
     	};
     }
     
-    function sendFile(fileData) {
+    function sendFile(fileData,porder) {
  		var formData = new FormData();
 
  		formData.append('imageData', fileData);
+ 		formData.append('listingId', $('#listingId').val()); 
+ 		formData.append('porder', porder);
 
  		$.ajax({
  			type: 'POST',
@@ -149,9 +193,9 @@
  			contentType: false,
  			processData: false,
  		}).done(function() {
- 		    alert( "success" );
+ 		    alert( "OK" );
  		  }) .fail(function() {
- 			    alert( "error" );
+ 			    alert( "Yükleme Hatası. Tekrar deneyiniz." );
  		  });
  	}
     
@@ -181,14 +225,15 @@
             <div class="col-md-9">
               <div class="box">
                   <h1 th:text="#{user.listing.header}">My Store</h1>
-                  <p class="text-muted" th:text="#{user.listing.header.text}"></p>
+                  <p class="text-muted" th:text="#{user.listing.photo.header.text}"></p>
 
                   <hr/>
-            
-                  <form id="f1" name="f1" th:action="@{/user/listingphoto}" th:object="${photoDto}" method="post" enctype="multipart/form-data" class="form-horizontal">
                   
-                  <input type="hidden" id="listingId" name="listingId" th:field="*{listingId}">
-                  <input type="hidden" id="porder" name="porder" value="1">
+                  <form id="f" name="f" th:object="${photoDto}">
+                     <input type="hidden" id="listingId" name="listingId" th:field="*{listingId}"> 
+                     <input type="hidden" id="porder" name="porder" value="1">
+                  
+                  
                   <div class="col-md-9" th:if="${not #strings.isEmpty(errorMessage)}">
                      <div class="products-sort-by">
                         <label  th:text="${errorMessage}" class="alert alert-danger"></label>
@@ -197,19 +242,22 @@
                   <div class="col-md-6">
                       <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.file1}"></th:block></strong></label>
                       <input type="file" accept="image/*" capture="camera" class="form-control" id="file1" name="file1" />
-                      <img id="img1" src="#"/>
+                      <img id="img1" style="width:250px;height: auto" th:src="${photo1}"/>
                   </div>  
+                  <hr/>
+                   <div class="col-md-6">
+                      <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.file2}"></th:block></strong></label>
+                      <input type="file" accept="image/*" capture="camera" class="form-control" id="file2" name="file2" />
+                      <img id="img2" style="width:250px;height: auto" th:src="${photo2}"/>
+                  </div>
+                  <hr/>
+                   <div class="col-md-6">
+                      <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.file3}"></th:block></strong></label>
+                      <input type="file" accept="image/*" capture="camera" class="form-control" id="file3" name="file3" />
+                      <img id="img3" style="width:250px;height: auto" th:src="${photo3}"/>
+                  </div>
                  
-                   <hr>
-                    
-                   <div class="form-group">
-                      <div class="col-md-9 text-center">
-                        <br/>
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>OK</button>
-                     </div>
-                   </div> 
-                </form>       
-
+                </form>                 
                </div>
             </div>          
          </div>
