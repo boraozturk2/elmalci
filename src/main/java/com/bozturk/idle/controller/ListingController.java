@@ -2,7 +2,6 @@ package com.bozturk.idle.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -107,6 +105,7 @@ public class ListingController extends MainController {
             listingDto.setCount(listing.getCount());
             listingDto.setPhone(listing.getPhone());
             listingDto.setPrice(listing.getPrice());
+            listingDto.setState(listing.getState());
             /*
              * if (product.getSideCategoryId()!=null) { Long cat3Side =
              * product.getSideCategoryId(); Long cat2Side =
@@ -181,15 +180,25 @@ public class ListingController extends MainController {
 
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/user/listing", method = RequestMethod.POST)
-    public ModelAndView setListing(@Valid ListingDto listingDto, BindingResult result, ModelAndView modelAndView) {
+    public ModelAndView setListing(@Valid ListingDto listingDto, BindingResult result, ModelAndView modelAndView, @RequestParam(value = "action", required = true) String action) {
 
         UserListing listing = null;
         if (listingDto.getListingId() != null && listingDto.getListingId() != 0) {
             listing = listingRepository.findOne(listingDto.getListingId());
+            if (action.equals("delete")) {
+                if (listing.getState().equals("C")){
+                    listingRepository.delete(listingDto.getListingId());
+                    return getListings();
+                }
+                else {
+                    result.reject("errorMessage","Silinemez");
+                    return getListing(listing.getListingId(), listingDto.getCat3(), listingDto.getCat2(), listingDto.getCat1());
+                }
+            }
         } else {
             listing = new UserListing();
         }
-
+        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userP = (UserPrincipal) authentication.getPrincipal();
         User user = userRepository.findByEmail(userP.getUsername());
@@ -206,18 +215,11 @@ public class ListingController extends MainController {
         listing.setState("E");
         listingRepository.save(listing);
 
-        return getPhotos(listing.getListingId(), result, modelAndView);
-        /*
-         * modelAndView = getListings(); modelAndView.addObject("cat1",
-         * listingDto.getCat1()); modelAndView.addObject("cat2s",
-         * categoryService.getCategoryDataByParentCategory(listingDto.getCat1())
-         * ); modelAndView.addObject("cat2", listingDto.getCat2());
-         * modelAndView.addObject("cat3s",
-         * categoryService.getCategoryDataByParentCategory(listingDto.getCat2())
-         * ); modelAndView.addObject("cat3", listingDto.getCat3());
-         * modelAndView.addObject("listings",
-         * listingRepository.findByUserId(user.getId())); return modelAndView;
-         */
+        if (action.equals("save")) {
+            return getListings();
+        } else {
+            return getPhotos(listing.getListingId(), result, modelAndView);
+        }
 
     }
 
@@ -227,7 +229,7 @@ public class ListingController extends MainController {
 
         Set<UserListingPhoto> photos = photoRepository.findByListing(listingId);
         for (UserListingPhoto listingPhoto : photos) {
-            modelAndView.addObject("photo"+listingPhoto.getPorder(),listingPhoto.getContent());
+            modelAndView.addObject("photo" + listingPhoto.getPorder(), listingPhoto.getContent());
         }
         UserListingPhoto photo = new UserListingPhoto();
         photo.setListingId(listingId);

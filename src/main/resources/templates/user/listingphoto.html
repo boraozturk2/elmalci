@@ -3,211 +3,217 @@
    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
-	<title>Elmalci Elektrik Malzemeleri Pazarı</title>
-	
-	<!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" -->
-  	<!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script -->
-  	<!--  script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script  -->
-    <script src="/js/jquery-1.11.0.min.js"></script>
-    <script src="/js/jquery-ui-1-11-0.min.js"></script>
-    <script src="/js/jquery.easy-autocomplete.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/jquery.cookie.js"></script>
-    <script src="/js/waypoints.min.js"></script>
-    <script src="/js/modernizr.js"></script>
-    <script src="/js/bootstrap-hover-dropdown.js"></script>
-    <script src="/js/owl.carousel.min.js"></script>
-    <script src="/js/front.js"></script>
-  	<script src="/js/respond.min.js"></script>
-    <script src="/js/front.js"></script>
-   
+<title>Elmalci Elektrik Malzemeleri Pazarı</title>
 
-    <meta charset="utf-8">
-    <meta name="robots" content="all,follow">
-    <meta name="googlebot" content="index,follow,snippet,archive">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Elmalci Elektrik Malzemeleri Pazarı">
-    <meta name="author" content="Bora Ozturk">
-    <meta name="keywords" content="Elektrik Malzemeleri">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" -->
+<!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script -->
+<!--  script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script  -->
+<script src="/js/jquery-1.11.0.min.js"></script>
+<script src="/js/jquery-ui-1-11-0.min.js"></script>
+<script src="/js/jquery.easy-autocomplete.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+<script src="/js/waypoints.min.js"></script>
+<script src="/js/modernizr.js"></script>
+<script src="/js/bootstrap-hover-dropdown.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/front.js"></script>
+<script src="/js/respond.min.js"></script>
+<script src="/js/front.js"></script>
 
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
 
-    <!-- styles -->
-    <link href="/css/font-awesome.css" rel="stylesheet">
-    <link href="/css/easy-autocomplete.min.css" rel="stylesheet">
-    <link href="/css/easy-autocomplete.themes.min.css" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/animate.min.css" rel="stylesheet">
-    <link href="/css/owl.carousel.css" rel="stylesheet">
-    <link href="/css/owl.theme.css" rel="stylesheet">
-	<link href="/css/registration.css" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Elmalci Elektrik Malzemeleri Pazarı">
+<meta name="author" content="Bora Ozturk">
+<meta name="keywords" content="Elektrik Malzemeleri">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <!-- theme stylesheet -->
-    <link href="/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
 
-    <!-- your stylesheet with modifications -->
-    <link href="/css/custom.css" rel="stylesheet">
-    <link rel="shortcut icon" href="/images/kablo.png">
-   
+<!-- styles -->
+<link href="/css/font-awesome.css" rel="stylesheet">
+<link href="/css/easy-autocomplete.min.css" rel="stylesheet">
+<link href="/css/easy-autocomplete.themes.min.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/animate.min.css" rel="stylesheet">
+<link href="/css/owl.carousel.css" rel="stylesheet">
+<link href="/css/owl.theme.css" rel="stylesheet">
+<link href="/css/registration.css" rel="stylesheet">
 
-   <script type="text/javascript">
-     $(document).ready(function() { 
-        if (window.File && window.FileReader && window.FormData) {
-    		var $inputField = $('#file1');
+<!-- theme stylesheet -->
+<link href="/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
 
-    		$inputField.on('change', function (e) {
-    			
-    			var file = e.target.files[0];
-    			var fileType=file["type"];
-				var ValidImageTypes = ["image/gif","image/jpeg","image/jpg","image/png"];
-				
-				if (file && $.inArray(fileType,ValidImageTypes) >= 0) {
-					readFile(file,"#img1",1);
-    			} else {
-    				alert('Resim Geçersiz!');
-    			}
-    		});
- 	    }else {
- 		   alert("Resim Yükleme Bu Ortamdan Desteklenmiyor!");
- 	    }
-     });
-     
-     $(document).ready(function() { 
-         if (window.File && window.FileReader && window.FormData) {
-     		var $inputField = $('#file2');
+<!-- your stylesheet with modifications -->
+<link href="/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="/images/kablo.png">
 
-     		$inputField.on('change', function (e) {
-     			
-     			var file = e.target.files[0];
-     			var fileType=file["type"];
- 				var ValidImageTypes = ["image/gif","image/jpeg","image/jpg","image/png"];
- 				
- 				if (file && $.inArray(fileType,ValidImageTypes) >= 0) {
- 					readFile(file,"#img2",2);
-     			} else {
-     				alert('Resim Geçersiz!');
-     			}
-     		});
-  	    }else {
-  		   alert("Resim Yükleme Bu Ortamdan Desteklenmiyor!");
-  	    }
-      });
-     $(document).ready(function() { 
-         if (window.File && window.FileReader && window.FormData) {
-     		var $inputField = $('#file3');
 
-     		$inputField.on('change', function (e) {
-     			
-     			var file = e.target.files[0];
-     			var fileType=file["type"];
- 				var ValidImageTypes = ["image/gif","image/jpeg","image/jpg","image/png"];
- 				
- 				if (file && $.inArray(fileType,ValidImageTypes) >= 0) {
- 					readFile(file,"#img3",3);
-     			} else {
-     				alert('Resim Geçersiz!');
-     			}
-     		});
-  	    }else {
-  		   alert("Resim Yükleme Bu Ortamdan Desteklenmiyor!");
-  	    }
-      });
-     
-     
- 
-     function readFile(file, fileField, porder) {
-  		var reader = new FileReader();
+<script th:inline="javascript">
+	$(document).ready(
+			function() {
+				if (window.File && window.FileReader && window.FormData) {
+					var $inputField = $('#file1');
 
-  		reader.onloadend = function (e) {
-  			processFile(reader.result, file.type,porder);
-  			$(fileField).attr('src',e.target.result)
-  		}
+					$inputField.on('change', function(e) {
 
-  		reader.onerror = function () {
-  			alert('Resim yükleme hatası!');
-  		}
+						var file = e.target.files[0];
+						var fileType = file["type"];
+						var ValidImageTypes = [ "image/gif", "image/jpeg",
+								"image/jpg", "image/png" ];
 
-  		reader.readAsDataURL(file);
-  	}
+						if (file && $.inArray(fileType, ValidImageTypes) >= 0) {
+							readFile(file, "#img1", 1);
+						} else {
+							alert('Resim Geçersiz!');
+						}
+					});
+				} else {
+					alert("Resim Yükleme Bu Ortamdan Desteklenmiyor!");
+				}
+			});
 
-    function processFile(dataURL, fileType, porder) {
-    	var maxWidth = 250;
-    	var maxHeight = 250;
+	$(document).ready(
+			function() {
+				if (window.File && window.FileReader && window.FormData) {
+					var $inputField = $('#file2');
 
-    	var image = new Image();
-    	image.src = dataURL;
+					$inputField.on('change', function(e) {
 
-    	image.onload = function () {
-    		var width = image.width;
-    		var height = image.height;
-    		var shouldResize = (width > maxWidth) || (height > maxHeight);
+						var file = e.target.files[0];
+						var fileType = file["type"];
+						var ValidImageTypes = [ "image/gif", "image/jpeg",
+								"image/jpg", "image/png" ];
 
-    		if (!shouldResize) {
-    			sendFile(dataURL,porder);
-    			return;
-    		}
+						if (file && $.inArray(fileType, ValidImageTypes) >= 0) {
+							readFile(file, "#img2", 2);
+						} else {
+							alert('Resim Geçersiz!');user.listing.photo.error.invalid
+						}
+					});
+				} else {
+					alert("Resim Yükleme Bu Ortamdan Desteklenmiyor!");
+				}
+			});
+	$(document).ready(
+			function() {
+				if (window.File && window.FileReader && window.FormData) {
+					var $inputField = $('#file3');
 
-    		var newWidth;
-    		var newHeight;
+					$inputField.on('change', function(e) {
 
-    		if (width > height) {
-    			newHeight = height * (maxWidth / width);
-    			newWidth = maxWidth;
-    		} else {
-    			newWidth = width * (maxHeight / height);
-    			newHeight = maxHeight;
-    		}
+						var file = e.target.files[0];
+						var fileType = file["type"];
+						var ValidImageTypes = [ "image/gif", "image/jpeg",
+								"image/jpg", "image/png" ];
 
-    		var canvas = document.createElement('canvas');
+						if (file && $.inArray(fileType, ValidImageTypes) >= 0) {
+							readFile(file, "#img3", 3);
+						} else {
+							/*<![CDATA[*/alert(/*[[#{user.listing.photo.error.invalid}]]*/);/*]]>*/
+						}
+					});
+				} else {
+					/*<![CDATA[*/alert(/*[[#{user.listing.photo.error.incapable}]]*/);/*]]>*/
+				}
+			});
 
-    		canvas.width = newWidth;
-    		canvas.height = newHeight;
+	function readFile(file, fileField, porder) {
+		var reader = new FileReader();
 
-    		var context = canvas.getContext('2d');
+		reader.onloadend = function(e) {
+			processFile(reader.result, file.type, porder);
+			$(fileField).attr('src', e.target.result)
+		}
 
-    		context.drawImage(this, 0, 0, newWidth, newHeight);
+		reader.onerror = function() {
+			/*<![CDATA[*/alert(/*[[#{user.listing.photo.error}]]*/);/*]]>*/
+		}
 
-    		dataURL = canvas.toDataURL(fileType);
+		reader.readAsDataURL(file);
+	}
 
-    		sendFile(dataURL,porder);
-    		
-    	};
+	function processFile(dataURL, fileType, porder) {
+		var maxWidth = 800;
+		var maxHeight = 800;
 
-    	image.onerror = function () {
-    		alert('There was an error processing your file!');
-    	};
-    }
-    
-    function sendFile(fileData,porder) {
- 		var formData = new FormData();
+		var image = new Image();
+		image.src = dataURL;
 
- 		formData.append('imageData', fileData);
- 		formData.append('listingId', $('#listingId').val()); 
- 		formData.append('porder', porder);
+		image.onload = function() {
+			var width = image.width;
+			var height = image.height;
+			var shouldResize = (width > maxWidth) || (height > maxHeight);
 
- 		$.ajax({
- 			type: 'POST',
- 			url: '/user/listingphoto',
- 			data: formData,
- 			contentType: false,
- 			processData: false,
- 		}).done(function() {
- 		    alert( "OK" );
- 		  }) .fail(function() {
- 			    alert( "Yükleme Hatası. Tekrar deneyiniz." );
- 		  });
- 	}
-    
-    function isUploadSupported() {
- 	    if (navigator.userAgent.match(/(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(Windows Phone (OS 7|8.0))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
- 	        return false;
- 	    }
- 	    var elem = document.createElement('input');
- 	    elem.type = 'file';
- 	    return !elem.disabled;
- 	};
-    </script>
+			if (!shouldResize) {
+				sendFile(dataURL, porder);
+				return;
+			}
+
+			var newWidth;
+			var newHeight;
+
+			if (width > height) {
+				newHeight = height * (maxWidth / width);
+				newWidth = maxWidth;
+			} else {
+				newWidth = width * (maxHeight / height);
+				newHeight = maxHeight;
+			}
+
+			var canvas = document.createElement('canvas');
+
+			canvas.width = newWidth;
+			canvas.height = newHeight;
+
+			var context = canvas.getContext('2d');
+
+			context.drawImage(this, 0, 0, newWidth, newHeight);
+
+			dataURL = canvas.toDataURL(fileType);
+
+			sendFile(dataURL, porder);
+
+		};
+
+		image.onerror = function() {
+			/*<![CDATA[*/alert(/*[[#{user.listing.photo.error}]]*/);/*]]>*/
+		};
+	}
+
+	function sendFile(fileData, porder) {
+		var formData = new FormData();
+
+		formData.append('imageData', fileData);
+		formData.append('listingId', $('#listingId').val());
+		formData.append('porder', porder);
+
+		$.ajax({
+			type : 'POST',
+			url : '/user/listingphoto',
+			data : formData,
+			contentType : false,
+			processData : false,
+		}).done(function() {
+			/*<![CDATA[*/alert(/*[[#{user.listing.photo.ok}]]*/);/*]]>*/			
+			
+		}).fail(function() {
+			/*<![CDATA[*/alert(/*[[#{user.listing.photo.error}]]*/);/*]]>*/
+		});
+	}
+
+	function isUploadSupported() {
+		if (navigator.userAgent
+				.match(/(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(Windows Phone (OS 7|8.0))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
+			return false;
+		}
+		var elem = document.createElement('input');
+		elem.type = 'file';
+		return !elem.disabled;
+	};
+</script>
 </head>
 
 <body>
@@ -220,52 +226,56 @@
             <div class="col-md-3">
                <div th:replace="user/leftnav :: userleftnav"></div>
             </div>
-            
-            
+
+
             <div class="col-md-9">
-              <div class="box">
                   <h1 th:text="#{user.listing.header}">My Store</h1>
                   <p class="text-muted" th:text="#{user.listing.photo.header.text}"></p>
 
-                  <hr/>
-                  
+                  <hr />
+
                   <form id="f" name="f" th:object="${photoDto}">
-                     <input type="hidden" id="listingId" name="listingId" th:field="*{listingId}"> 
-                     <input type="hidden" id="porder" name="porder" value="1">
-                  
-                  
-                  <div class="col-md-9" th:if="${not #strings.isEmpty(errorMessage)}">
-                     <div class="products-sort-by">
-                        <label  th:text="${errorMessage}" class="alert alert-danger"></label>
+                     <input type="hidden" id="listingId" name="listingId" th:field="*{listingId}"> <input type="hidden" id="porder" name="porder" value="1">
+
+                     <div class="col-md-9">
+                        <label for="file1" class="label label-primary"><strong><th:block th:text="#{user.listing.file1}"></th:block></strong></label> <input type="file" accept="image/*"
+                           capture="camera" class="form-control" id="file1" name="file1" /> <img id="img1" style="width: 320px; height: auto" th:src="${photo1}" />
+                     </div>
+                     <hr/>
+                     <div class="col-md-9">
+                        <label for="file2" class="label label-primary"><strong><th:block th:text="#{user.listing.file2}"></th:block></strong></label> <input type="file" accept="image/*"
+                           capture="camera" class="form-control" id="file2" name="file2" /> <img id="img2" style="width: 320px; height: auto" th:src="${photo2}" />
+                     </div>
+                     <hr/>
+                     <div class="col-md-9">
+                        <label for="file3" class="label label-primary"><strong><th:block th:text="#{user.listing.file3}"></th:block></strong></label> <input type="file" accept="image/*"
+                           capture="camera" class="form-control" id="file3" name="file3" /> <img id="img3" style="width: 320px; height: auto" th:src="${photo3}" />
+                     </div>
+
+                  </form>
+       
+               <form id="f2" name="f2" th:action="@{/user/listings}">
+                  <div class="form-group">
+                     <div class="col-md-9 text-center">
+                        <br />
+                        <button type="submit" class="btn btn-primary">
+                           <i class="fa fa-list"></i>
+                           <th:block th:text="#{user.listing.save.to.listing}">
+                        </button>
                      </div>
                   </div>
-                  <div class="col-md-6">
-                      <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.file1}"></th:block></strong></label>
-                      <input type="file" accept="image/*" capture="camera" class="form-control" id="file1" name="file1" />
-                      <img id="img1" style="width:250px;height: auto" th:src="${photo1}"/>
-                  </div>  
-                  <hr/>
-                   <div class="col-md-6">
-                      <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.file2}"></th:block></strong></label>
-                      <input type="file" accept="image/*" capture="camera" class="form-control" id="file2" name="file2" />
-                      <img id="img2" style="width:250px;height: auto" th:src="${photo2}"/>
-                  </div>
-                  <hr/>
-                   <div class="col-md-6">
-                      <label for="description" class="label label-primary"><strong><th:block th:text="#{user.listing.file3}"></th:block></strong></label>
-                      <input type="file" accept="image/*" capture="camera" class="form-control" id="file3" name="file3" />
-                      <img id="img3" style="width:250px;height: auto" th:src="${photo3}"/>
-                  </div>
-                 
-                </form>                 
-               </div>
-            </div>          
+
+               </form>
+
+
+            </div>
          </div>
       </div>
    </div>
+   
+   <br/><br/>
 
-   <div th:replace="fragments/footer :: myfooter"></div>
-
+   
 </body>
 
 </html>
