@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bozturk.idle.dto.IdDto;
 import com.bozturk.idle.dto.ListingDto;
+import com.bozturk.idle.dto.UserListingDto;
 import com.bozturk.idle.model.Category;
 import com.bozturk.idle.model.Product;
 import com.bozturk.idle.model.User;
@@ -168,8 +170,19 @@ public class ListingController extends MainController {
         UserPrincipal userP = (UserPrincipal) authentication.getPrincipal();
         User user = userRepository.findByEmail(userP.getUsername());
 
+        List<UserListingDto> dtos= new ArrayList<UserListingDto>();
         List<UserListing> listings = listingRepository.findByUserId(user.getId());
-        modelAndView.addObject("listings", listings);
+        for (UserListing userListing : listings) {
+            UserListingDto dto = new UserListingDto();
+            BeanUtils.copyProperties(userListing, dto);
+            UserListingPhoto photo = photoRepository.findByListingIdAndPorder(userListing.getListingId(), 1);
+            if (photo!=null) {
+                dto.setContent(photo.getContent());
+            }
+            dtos.add(dto);
+        }
+        
+        modelAndView.addObject("listings", dtos);
         modelAndView.addObject("idDto", new IdDto());
         modelAndView.addObject("products", new ArrayList<Product>());
         modelAndView.addObject("categoryId", 0L);
@@ -247,7 +260,10 @@ public class ListingController extends MainController {
         // data:image/png;base64,iVBORw312312
 
         String mimeType = file1.substring(5, file1.indexOf(";"));
-        UserListingPhoto photo = new UserListingPhoto();
+        
+        UserListingPhoto photo = photoRepository.findByListingIdAndPorder(listingId, porder);
+        if (photo==null)
+            photo = new UserListingPhoto();
 
         try {
             if (file1.isEmpty()) {
