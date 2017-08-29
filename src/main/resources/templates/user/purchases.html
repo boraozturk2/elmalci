@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}"
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+   <div th:replace="fragments/header :: myheader"></div>
+
+   <div id="all">
+      <div id="content">
+         <div class="container">
+            <div class="col-md-3">
+               <div th:replace="user/leftnav :: userleftnav(selected='purchase')"></div>
+            </div>
+
+            <div class="col-md-9">
+               <div class="box">
+
+                  <h1>
+                     <i class="fa fa-credit-card fa-x" aria-hidden="true"></i>
+                     <th:block th:text="#{user.purchase.header}"></th:block>
+                  </h1>
+                  <p class="lead" th:text="#{user.purchase.header.lead}"></p>
+
+                  <div class="box">
+                     <div class="table-responsive">
+                        <table class="table table-hover">
+                           <thead>
+                              <tr>
+                                 <th th:text="#{user.listing.table.name}">Listing Image</th>
+                                 <th th:text="#{user.listing.table.category}">Category</th>
+                                 <th th:text="#{user.listing.table.make}">Make</th>
+                                 <th th:text="#{user.listing.table.model}">Model</th>
+                                 <th th:text="#{user.listing.table.serial}">Model</th>
+                                 <th th:text="#{user.listing.table.store}">Mağaza</th>
+                                 <th th:text="#{user.listing.table.header}">Fiyat</th>
+                                 <th th:text="#{user.listing.table.count}">Fiyat</th>
+                                 <th th:text="#{user.listing.table.price}">Fiyat</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr th:each="listing : ${listings}">
+                                 <td><img id="img1" style="width: 25px; height: auto" th:src="${listing.content}" /></td>
+                                 <td th:text="${listing.product.categoryName}"></td>
+                                 <td th:text="${listing.product.make}"></td>
+                                 <td th:text="${listing.product.model}"></td>
+                                 <td th:text="${listing.product.serial}"></td>
+                                 <td th:text="${listing.store.storeName}"></td>
+                                 <td th:text="${listing.header}"></td>
+                                 <td th:text="${listing.count}"></td>
+                                 <td th:text="${listing.price}"></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div th:replace="fragments/footer :: myfooter"></div>
+
+</body>
+
+</html>

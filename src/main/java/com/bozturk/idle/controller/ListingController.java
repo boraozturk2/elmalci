@@ -190,6 +190,37 @@ public class ListingController extends MainController {
         addMissingObjects(modelAndView);
         return modelAndView;
     }
+    
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/user/purchases", method = RequestMethod.GET)
+    public ModelAndView getPurchases() {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userP = (UserPrincipal) authentication.getPrincipal();
+        User user = userRepository.findByEmail(userP.getUsername());
+
+        List<UserListingDto> dtos= new ArrayList<UserListingDto>();
+        List<UserListing> listings = listingRepository.findByBuyerId(user.getId());
+        for (UserListing userListing : listings) {
+            UserListingDto dto = new UserListingDto();
+            BeanUtils.copyProperties(userListing, dto);
+            UserListingPhoto photo = photoRepository.findByListingIdAndPorder(userListing.getListingId(), 1);
+            if (photo!=null) {
+                dto.setContent(photo.getContent());
+            }
+            dtos.add(dto);
+        }
+        
+        modelAndView.addObject("listings", dtos);
+        modelAndView.addObject("idDto", new IdDto());
+        modelAndView.addObject("products", new ArrayList<Product>());
+        modelAndView.addObject("categoryId", 0L);
+        modelAndView.setViewName("/user/purchases");
+        addMissingObjects(modelAndView);
+        return modelAndView;
+    }
 
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/user/listing", method = RequestMethod.POST)

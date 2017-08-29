@@ -12,13 +12,13 @@
       <div id="content">
          <div class="container">
             <div class="col-md-3">
-               <div th:replace="user/leftnav :: userleftnav"></div>
+               <div th:replace="user/leftnav :: userleftnav(selected='listing')"></div>
             </div>
             
             <div class="col-md-9">
                     <div class="box">
                     
-                        <h1><i class="fa fa-home fa-2x" aria-hidden="true"></i><th:block th:text="#{user.listing.header}"></th:block></h1>
+                        <h1><i class="fa fa-home fa-2x" aria-hidden="true"></i>&nbsp;<th:block th:text="#{user.listing.header}"></th:block></h1>
                         <p class="lead" th:text="#{user.listing.header.lead}"></p>
                         <!-- p class="text-muted" th:text="#{user.listing.header.text}"></p-->
 
@@ -38,13 +38,12 @@
                                      <th th:text="#{user.listing.table.header}">Fiyat</th>
                                      <th th:text="#{user.listing.table.count}">Fiyat</th>
                                      <th th:text="#{user.listing.table.price}">Fiyat</th>
-                                     <th th:text="#{user.listing.table.state}">İşlem</th>
                                      <th th:text="#{user.listing.table.action}">İşlem</th>
                                  </tr>
                              </thead>
                              <tbody>
                                  <tr th:each="listing : ${listings}">
-                                     <td><img id="img3" style="width: 25px; height: auto" th:src="${listing.content}" /></td>
+                                     <td><img id="img1" style="width: 25px; height: auto" th:src="${listing.content}" /></td>
                                      <td th:text="${listing.product.categoryName}"></td>
                                      <td th:text="${listing.product.make}"></td>
                                      <td th:text="${listing.product.model}"></td>
@@ -53,7 +52,6 @@
                                      <td th:text="${listing.header}"></td>
                                      <td th:text="${listing.count}"></td>
                                      <td th:text="${listing.price}"></td>
-                                     <td th:text="${listing.state}"></td>
                                      <td><a th:href="@{/user/listing(listingId=${listing.listingId})}" class="btn btn-primary btn-sm"><i class="fa fa-book" aria-hidden="true"></i></a></td>
                                  </tr>
                              </tbody>

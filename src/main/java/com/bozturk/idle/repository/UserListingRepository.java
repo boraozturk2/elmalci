@@ -13,4 +13,6 @@ import com.bozturk.idle.model.UserListing;
 public interface UserListingRepository extends JpaRepository<UserListing, Long> {
 
 	List<UserListing> findByUserId(long userId);	
+	
+	List<UserListing> findByBuyerId(long userId);
 }
